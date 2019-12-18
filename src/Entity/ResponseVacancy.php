@@ -39,7 +39,7 @@ class ResponseVacancy
      *     nullable=false
      * )
      */
-    private $Vacancy;
+    private $vacancy;
 
     /**
      * @ORM\Column(type="text")
@@ -89,12 +89,12 @@ class ResponseVacancy
 
     public function getVacancy(): ?Vacancy
     {
-        return $this->Vacancy;
+        return $this->vacancy;
     }
 
-    public function setVacancy(?Vacancy $Vacancy): self
+    public function setVacancy(?Vacancy $vacancy): self
     {
-        $this->Vacancy = $Vacancy;
+        $this->vacancy = $vacancy;
 
         return $this;
     }

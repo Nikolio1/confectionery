@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AwardsRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\AwardRepository")
  */
-class Awards
+class Award
 {
     /**
      * @ORM\Id()
@@ -32,7 +32,7 @@ class Awards
     private $text;
 
     /**
-     * @ORM\Column(name="image_name", type="string", length=255)
+     * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
      */
     private $imageName;
 

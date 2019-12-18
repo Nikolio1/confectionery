@@ -5,15 +5,15 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProductController extends AbstractController
+class CategoryController extends AbstractController
 {
     /**
-     * @Route("/product", name="product")
+     * @Route("/category", name="category")
      */
     public function index()
     {
-        return $this->render('product/index.html.twig', [
-            'products' => 'products',
+        return $this->render('category/index.html.twig', [
+            'controller_name' => 'CategoryController',
         ]);
     }
 }

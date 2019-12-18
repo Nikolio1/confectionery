@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vacancies{% endblock %}
+
+{% block main %}
+<table>
+    {% for  vacancy in vacancies %}
+        <tr>
+            <td>{{ vacancy.id}}</td>
+            <td>{{ vacancy.name}}</td>
+            <td>{{ vacancy.description}}</td>
+        <tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

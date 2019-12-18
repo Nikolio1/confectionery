@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\Awards;
+use App\Entity\Award;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Awards|null find($id, $lockMode = null, $lockVersion = null)
- * @method Awards|null findOneBy(array $criteria, array $orderBy = null)
- * @method Awards[]    findAll()
- * @method Awards[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Award|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Award|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Award[]    findAll()
+ * @method Award[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AwardsRepository extends ServiceEntityRepository
+class AwardRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Awards::class);
+        parent::__construct($registry, Award::class);
     }
 
     // /**

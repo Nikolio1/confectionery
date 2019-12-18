@@ -69,7 +69,7 @@ class Product
      *     name="subCategory_id",
      *     referencedColumnName="id",
      *     onDelete="CASCADE",
-     *     nullable=false
+     *     nullable=true
      * )
      */
     private $subCategory;

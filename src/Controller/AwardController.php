@@ -12,6 +12,9 @@ class AwardController extends AbstractController
      */
     public function awards()
     {
+
+
+
         return $this->render('award/awards.html.twig', [
             'controller_name' => 'AwardController',
         ]);

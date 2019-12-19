@@ -29,11 +29,11 @@ class ResponseVacancy
     /**
      * @ORM\ManyToOne(
      *     targetEntity="Vacancy",
-     *      inversedBy="responses"
+     *     inversedBy="responses"
      * )
      *
      * @ORM\JoinColumn(
-     *     name="vacancy_id",
+     *     name="vacancy",
      *     referencedColumnName="id",
      *     onDelete="CASCADE",
      *     nullable=false
@@ -44,7 +44,9 @@ class ResponseVacancy
     /**
      * @ORM\Column(type="text")
      */
-    private $MessageText;
+    private $messageText;
+
+//
 
     public function getId(): ?int
     {
@@ -75,18 +77,6 @@ class ResponseVacancy
         return $this;
     }
 
-    public function getMessageText(): ?string
-    {
-        return $this->MessageText;
-    }
-
-    public function setMessageText(string $MessageText): self
-    {
-        $this->MessageText = $MessageText;
-
-        return $this;
-    }
-
     public function getVacancy(): ?Vacancy
     {
         return $this->vacancy;
@@ -95,6 +85,18 @@ class ResponseVacancy
     public function setVacancy(?Vacancy $vacancy): self
     {
         $this->vacancy = $vacancy;
+
+        return $this;
+    }
+
+    public function getMessageText(): ?string
+    {
+        return $this->messageText;
+    }
+
+    public function setMessageText(string $messageText): self
+    {
+        $this->messageText = $messageText;
 
         return $this;
     }

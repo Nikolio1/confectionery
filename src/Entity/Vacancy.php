@@ -85,7 +85,7 @@ class Vacancy
     {
         if (!$this->responses->contains($response)) {
             $this->responses[] = $response;
-            $response->setVacancyId($this);
+            $response->setVacancy($this);
         }
 
         return $this;
@@ -96,8 +96,8 @@ class Vacancy
         if ($this->responses->contains($response)) {
             $this->responses->removeElement($response);
             // set the owning side to null (unless already changed)
-            if ($response->getVacancyId() === $this) {
-                $response->setVacancyId(null);
+            if ($response->getVacancy() === $this) {
+                $response->setVacancy(null);
             }
         }
 

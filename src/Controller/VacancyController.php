@@ -2,42 +2,57 @@
 
 namespace App\Controller;
 
+use App\Entity\ResponseVacancy;
 use App\Entity\Vacancy;
-use App\Handlers\BaseHandler;
+use App\Form\Type\ResponseVacancyType;
+use App\Handlers\VacancyHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class VacancyController extends AbstractController
 {
-    public $base;
+
+    public $handler;
 
     /**
      * VacancyController constructor.
-     *
-     * @param BaseHandler $base
+     * @param VacancyHandler $handler
      */
-    public function __construct(BaseHandler $base)
+    public function __construct(VacancyHandler $handler)
     {
-        $this->base = $base;
+        $this->handler = $handler;
     }
 
     /**
      * @Route("/vacancies", name="vacancies")
+     *
+     * @param Request $request
+     * @return Response
      */
-    public function vacancies()
+    public function vacancies(Request $request)
     {
-
-
-        $vacancies = $this->base
+        $vacancies = $this->handler
             ->getRepository(Vacancy::class)
             ->findAll();
-        if (!$vacancies) {
-            throw $this->createNotFoundException(
-                'No event found'
-            );
+
+        $response = new ResponseVacancy();
+        $form = $this->createForm(ResponseVacancyType::class, $response);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->handler->saveObject($response);
+            $this->addFlash('success', 'new item created successfully!!!');
+
+            return $this->redirectToRoute('vacancies');
         }
+
+
         return $this->render('vacancy/index.html.twig', [
-            'vacancies' => $vacancies
+            'vacancies' => $vacancies,
+            'form' => $form->createView()
         ]);
     }
 }

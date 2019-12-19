@@ -3,21 +3,53 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="css/style.css">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         <header>
             <div class="container">
-
-
+                <nav class="nav">
+                    <div class="logo">
+                        <a href="{{ path('homepage')  }}">
+                            <img src="images/logo.png" alt="">
+                        </a>
+                    </div>
+                    <ul class="menu">
+                        <li class="menu-item">
+                            <a class="menu-link" href="{{ path('homepage') }}">Homepage</a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="{{ path('about_company') }}">About company</a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="{{ path('news') }}">News</a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="{{ path('category') }}">Our production</a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="{{ path('sub_category') }}">Custom cakes</a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="{{ path('shop') }}">Shops</a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="{{ path('review') }}">Reviews</a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="{{ path('contact') }}">Contacts</a>
+                        </li>
+                    </ul
+                </nav>
             </div>
         </header>
         <main>
             <div class="container">
-
+                {% block main %}{% endblock %}
 
             </div>
-                {% block main %}{% endblock %}
+
         </main>
         <footer>
            <div class="container">

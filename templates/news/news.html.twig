@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block main %}
+     {% for  onenews in news %}
+        <h2>{{ onenews.heading}}</h2> <br>
+        <p>{{ onenews.annotation}}</p>
+        <tr>
+    {% endfor %}
+{% endblock %}

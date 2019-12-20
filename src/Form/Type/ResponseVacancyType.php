@@ -24,7 +24,6 @@
             $builder
                 ->add('vacancy', EntityType::class,[
                     'class' => Vacancy::class,
-
                     'choice_label' => 'name',
                 ])
                 ->add('email', EmailType::class)

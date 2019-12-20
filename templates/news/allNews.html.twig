@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block main %}
+
+         <table>
+             <tr>
+                 <th>{{ knp_pagination_sortable(pagination, 'heading', 'a.heading') }}</th>
+                 <th{% if pagination.isSorted('a.heading') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'heading', 'a.heading')|raw }}</th>
+             </tr>
+
+             {# table body #}
+             {% for news in pagination %}
+                 <tr {% if loop.index is odd %}class="color"{% endif %}>
+                     <td>
+                     <a href="{{ path('show_news', { id: news.id }) }}">
+                         {{  news.heading }}
+                         {{ news.annotation }}
+                     </a>
+
+                     </td>
+                 </tr>
+             {% endfor %}
+         </table>
+         {# display navigation #}
+         <div class="navigation">
+             {{ knp_pagination_render(pagination) }}
+         </div>
+
+
+
+{#    {% endfor %}#}
+{% endblock %}

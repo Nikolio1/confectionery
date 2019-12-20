@@ -19,7 +19,7 @@ class News
     /**
      * @ORM\Column(type="date")
      */
-    private $dataCreation;
+    private $dateCreation;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -44,18 +44,6 @@ class News
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDataCreation(): ?\DateTimeInterface
-    {
-        return $this->dataCreation;
-    }
-
-    public function setDataCreation(\DateTimeInterface $dataCreation): self
-    {
-        $this->dataCreation = $dataCreation;
-
-        return $this;
     }
 
     public function getHeading(): ?string
@@ -102,6 +90,18 @@ class News
     public function setImageName(string $imageName): self
     {
         $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function getDateCreation(): ?\DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    {
+        $this->dateCreation = $dateCreation;
 
         return $this;
     }

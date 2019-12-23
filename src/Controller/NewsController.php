@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\News;
 use App\Handlers\NewsHandler;
-use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NewsController extends AbstractController
 {
-
     public $newsHandler;
 
     /**
@@ -26,24 +24,26 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("/allNews", name="allNews")
-     * @param EntityManagerInterface $em
+     * @Route("/all-news", name="all_news")
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
      */
-    public function listAction(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request)
+    public function listAction(PaginatorInterface $paginator, Request $request)
     {
-        $dql   = "SELECT a FROM App\Entity\News a";
-        $query = $em->createQuery($dql);
+        $query =  $this->newsHandler
+            ->getRepository(News::class)
+            ->findAllNews();
 
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
             5
         );
+
         return $this->render('news/allNews.html.twig', ['pagination' => $pagination]);
     }
+
 
     /**
      * @Route("/news/{id}", name="show_news")
@@ -52,8 +52,6 @@ class NewsController extends AbstractController
      */
     public function show(News $news)
     {
-
-        dd($news);
         return $this->render('news/news.html.twig', [
             'news' => $news
         ]);

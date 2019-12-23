@@ -4,13 +4,11 @@
     namespace App\Handlers;
 
 
-
-
     /**
-     * Class NewsHandler
+     * Class CaregoryHandler
      * @package App\Handlers
      */
-    class NewsHandler extends BaseHandler
+    class CategoryHandler extends BaseHandler
     {
 
     }

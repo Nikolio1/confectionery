@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="css/style.css">
         {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     </head>
     <body>
         <header>
@@ -12,7 +12,7 @@
                 <nav class="nav">
                     <div class="logo">
                         <a href="{{ path('homepage')  }}">
-                            <img src="images/logo.png" alt="">
+                            <img src="{{ asset('images/logo.png') }}" alt="logo">
                         </a>
                     </div>
                     <ul class="menu">
@@ -23,10 +23,10 @@
                             <a class="menu-link" href="{{ path('about_company') }}">About company</a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="{{ path('allNews') }}">News</a>
+                            <a class="menu-link" href="{{ path('all_news') }}">News</a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="{{ path('category') }}">Our production</a>
+                            <a class="menu-link" href="{{ path('categories') }}">Our production</a>
                         </li>
                         <li class="menu-item">
                             <a class="menu-link" href="{{ path('sub_category') }}">Custom cakes</a>

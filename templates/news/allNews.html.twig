@@ -8,11 +8,24 @@
              {% for news in pagination %}
                  <tr {% if loop.index is odd %}class="color"{% endif %}>
                      <td>
-                     <a href="{{ path('show_news', { id: news.id }) }}">
-                         {{ news.dateCreation|date("m/d/Y") }}
-                         {{ news.heading }}
-                         {{ news.annotation }}
-                     </a>
+                         <div  class="wrap-news">
+                             <div class="news-image news-margin">
+                                 {% if news.imageName is not null and news.imageName is not empty %}
+
+                                     <a href="{{ path('show_news', { id: news.id }) }}">
+                                         <img src="{{ asset('images/news/' ~ news.imageName) }}" alt="image">
+                                     </a>
+
+                                 {% endif %}
+                             </div>
+                             <div class="news-annotation">
+                                 <a href="{{ path('show_news', { id: news.id }) }}">
+                                     {{ news.dateCreation|date("m/d/Y") }}<br>
+                                     {{ news.heading }}<br>
+                                     {{ news.annotation }}
+                                 </a>
+                             </div>
+                         </div>
                      </td>
                  </tr>
              {% endfor %}

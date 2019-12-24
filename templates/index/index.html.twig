@@ -1,5 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-Главная
+Главная <br>
+
+    <div class="wrap-news">
+        {% for news in allNews|slice(1, 4) %}
+
+            <div class="index-news">
+                <div class="news-image">
+                    <a href="{{ path('show_news', { id: news.id }) }}">
+                        <img src="{{ asset('images/news/' ~ news.imageName) }}" alt="image">
+                    </a>
+                </div>
+                <div class="news-description">
+                    <p>{{ news.dateCreation|date("m/d/Y") }}</p> <br>
+                    <a href="{{ path('show_news', { id: news.id }) }}">
+                        <h2>{{ news.heading }}</h2>
+                    </a>  <br>
+                    <p>{{ news.annotation }}</p> <br>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

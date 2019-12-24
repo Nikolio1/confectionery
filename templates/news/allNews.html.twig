@@ -9,10 +9,10 @@
                  <tr {% if loop.index is odd %}class="color"{% endif %}>
                      <td>
                      <a href="{{ path('show_news', { id: news.id }) }}">
-                         {{  news.heading }}
+                         {{ news.dateCreation|date("m/d/Y") }}
+                         {{ news.heading }}
                          {{ news.annotation }}
                      </a>
-
                      </td>
                  </tr>
              {% endfor %}

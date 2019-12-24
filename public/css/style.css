@@ -5,6 +5,11 @@ a {
     text-decoration: none;
 }
 
+img {
+    width: 100%;
+    height: auto;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -22,4 +27,22 @@ a {
 
 .menu-item {
     margin-left: 20px;
+}
+
+.wrap-news {
+    display: flex;
+    justify-content: space-between;
+}
+
+.news-image {
+    max-width: 170px;
+    height: 140px;
+}
+.news-margin {
+    margin-right: 100px;
+}
+
+.news-annotation{
+    display: flex;
+    align-items: center;
 }

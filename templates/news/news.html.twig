@@ -4,7 +4,9 @@
 
 {% block main %}
 
-
+        <div class="news-image">
+                <img src="{{ asset('images/news/' ~ news.imageName) }}" alt="">
+        </div>
         <h2>{{ news.heading }}</h2> <br>
         <p>{{ news.annotation }}</p> <br>
         <p>{{ news.text}}</p>

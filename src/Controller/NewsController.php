@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\News;
 use App\Form\Type\NewsType;
+use App\Handlers\BaseHandler;
 use App\Handlers\NewsHandler;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,14 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NewsController extends AbstractController
 {
+    public $handler;
+
     public $newsHandler;
 
     /**
      * NewsController constructor.
+     * @param BaseHandler $handler
      * @param NewsHandler $newsHandler
      */
-    public function __construct(NewsHandler $newsHandler)
+    public function __construct(BaseHandler $handler , NewsHandler $newsHandler)
     {
+        $this->handler = $handler;
         $this->newsHandler = $newsHandler;
     }
 
@@ -33,7 +38,7 @@ class NewsController extends AbstractController
      */
     public function listAction(PaginatorInterface $paginator, Request $request)
     {
-        $query =  $this->newsHandler
+        $query =  $this->handler
             ->getRepository(News::class)
             ->findAllNews();
 
@@ -71,7 +76,7 @@ class NewsController extends AbstractController
         if (!$post) {
             return $this->redirectToRoute('categories');
         }
-        $this->newsHandler->removeObject($post);
+        $this->handler->removeObject($post);
         return $this->redirectToRoute('all_news');
     }
 
@@ -87,8 +92,17 @@ class NewsController extends AbstractController
         $news = new News();
         $form = $this->createForm(NewsType::class, $news);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->newsHandler->saveObject($news);
+
+
+            $imageFile = $form['imageName']->getData();
+            if ($imageFile) {
+                $imageFileName = $this->newsHandler->upload($imageFile , '/news');
+                $news->setImageName($imageFileName);
+            }
+
+            $this->handler->saveObject($news);
             $this->addFlash('success', 'new item created success!!!');
             return $this->redirectToRoute('all_news');
         }
@@ -107,13 +121,16 @@ class NewsController extends AbstractController
      */
     public function edit(News $news, Request $request)
     {
-        $news = $this->newsHandler
+
+        $news = $this->handler
             ->getRepository(News::class)
             ->find($news);
         $form = $this->createForm(NewsType::class, $news);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->newsHandler->saveObject($news);
+
+            $this->handler->saveObject($news);
             $this->addFlash('success', 'Success)))!');
             return $this->redirectToRoute('all_news');
         }

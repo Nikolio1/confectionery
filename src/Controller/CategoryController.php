@@ -35,7 +35,6 @@ class CategoryController extends AbstractController
     /**
      * @Route("/custom-cakes", name="custom_cakes")
      *
-     *
      * @return Response
      */
     public function customCakes()

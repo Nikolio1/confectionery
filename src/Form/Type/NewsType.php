@@ -1,9 +1,9 @@
 <?php
     namespace App\Form\Type;
-    use App\Entity\Category;
     use App\Entity\News;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\Extension\Core\Type\DateType;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +20,10 @@
                 ->add('heading', TextType::class)
                 ->add('annotation', TextType::class)
                 ->add('text', TextType::class)
-                ->add('imageName', TextType::class, ['empty_data' => null,'required'=> false])
+                ->add('imageName', FileType::class, [
+                    'mapped' => false,
+                    'required'=> false
+                ])
             ;
         }
         /**

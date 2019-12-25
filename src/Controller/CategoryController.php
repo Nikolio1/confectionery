@@ -33,17 +33,37 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/categories", name="categories")
-     *
-     * @return Response
-     */
+ * @Route("/categories", name="categories")
+ *
+ * @return Response
+ */
     public function categories()
     {
         $categories= $this->categoryHandler
             ->getRepository(Category::class)
-            ->findAll();
+            ->findBy(
+                ['isElite' => false]
+            );
 
         return $this->render('category/index.html.twig', [
+            'categories' => $categories,
+        ]);
+    }
+
+    /**
+     * @Route("/custom-cakes", name="custom_cakes")
+     *
+     * @return Response
+     */
+    public function customCakes()
+    {
+        $categories= $this->categoryHandler
+            ->getRepository(Category::class)
+            ->findBy(
+                ['isElite' => true]
+            );
+
+        return $this->render('custom_cakes/subCategories.html.twig', [
             'categories' => $categories,
         ]);
     }
@@ -124,6 +144,4 @@ class CategoryController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-
 }

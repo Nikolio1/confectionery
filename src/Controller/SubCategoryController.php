@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SubCategoryController extends AbstractController
 {
     /**
-     * @Route("/sub/category", name="sub_category")
+     * @Route("/sub-category", name="sub_category")
      */
     public function index()
     {

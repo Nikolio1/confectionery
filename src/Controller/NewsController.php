@@ -40,7 +40,7 @@ class NewsController extends AbstractController
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            5
+            10
         );
 
         return $this->render('news/allNews.html.twig', ['pagination' => $pagination]);

@@ -33,6 +33,26 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * @Route("/custom-cakes", name="custom_cakes")
+     *
+     *
+     * @return Response
+     */
+    public function customCakes()
+    {
+        $categories= $this->categoryHandler
+            ->getRepository(Category::class)
+            ->findBy(
+                ['isElite' => true]
+            );
+
+
+        return $this->render('custom_cakes/subCategories.html.twig', [
+            'categories' => $categories,
+        ]);
+    }
+
+    /**
  * @Route("/categories", name="categories")
  *
  * @return Response
@@ -50,23 +70,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/custom-cakes", name="custom_cakes")
-     *
-     * @return Response
-     */
-    public function customCakes()
-    {
-        $categories= $this->categoryHandler
-            ->getRepository(Category::class)
-            ->findBy(
-                ['isElite' => true]
-            );
 
-        return $this->render('custom_cakes/subCategories.html.twig', [
-            'categories' => $categories,
-        ]);
-    }
 
     /**
      * @Route("/category/{id}", name="show_category")

@@ -3,9 +3,18 @@
 {% block title %}{{ category.name }}{% endblock %}
 
 {% block main %}
+
     Category: {{ category.name }} <br><br>
-     {% for  product in category.products %}
-         <a href="{{ path('show_product', { id: product.id }) }}">{{product.name}}</a>
-        <br>
-    {% endfor %}
+    {% if not category.isElite %}
+        {% for  product in category.products %}
+            <a href="{{ path('show_product', { id: product.id }) }}">{{product.name}}</a>
+            <br>
+        {% endfor %}
+    {% else %}
+        {% for subcategory in category.subCategories %}
+            <a href="{{ path('show_subCategory', { id: subcategory.id }) }}">{{ subcategory.name }}</a>
+            <br>
+        {% endfor %}
+    {% endif %}
+
 {% endblock %}

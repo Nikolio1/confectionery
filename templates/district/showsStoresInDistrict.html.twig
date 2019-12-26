@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Districts{% endblock %}
+
+{% block main %}
+    {% for shop in district.shops %}
+        <a href="{{ path('show_store', { id:shop.id}) }}"> {{ shop.name }}</a><br>
+    {% endfor %}
+{% endblock main %}

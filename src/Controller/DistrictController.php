@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\District;
-use App\Entity\Shop;
 use App\Form\Type\DistrictType;
 use App\Handlers\BaseHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,11 +19,9 @@ class DistrictController extends AbstractController
     public $handler;
 
     /**
-    public $handler;
-    /**
-     * NewsController constructor.
+     * DistrictController constructor.
+     *
      * @param BaseHandler $handler
-
      */
     public function __construct(BaseHandler $handler)
     {

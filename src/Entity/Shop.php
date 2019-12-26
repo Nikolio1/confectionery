@@ -29,12 +29,7 @@ class Shop
     /**
      * @ORM\Column(name="map_link", type="string", length=255)
      */
-    private $MapLink;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $brended;
+    private $mapLink;
 
     /**
      * @ORM\ManyToOne(
@@ -49,6 +44,11 @@ class Shop
      * )
      */
     private $district;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isBranded;
 
     public function getId(): ?int
     {
@@ -81,24 +81,12 @@ class Shop
 
     public function getMapLink(): ?string
     {
-        return $this->MapLink;
+        return $this->mapLink;
     }
 
-    public function setMapLink(string $MapLink): self
+    public function setMapLink(string $mapLink): self
     {
-        $this->MapLink = $MapLink;
-
-        return $this;
-    }
-
-    public function getBrended(): ?string
-    {
-        return $this->brended;
-    }
-
-    public function setBrended(string $brended): self
-    {
-        $this->brended = $brended;
+        $this->mapLink = $mapLink;
 
         return $this;
     }
@@ -111,6 +99,18 @@ class Shop
     public function setDistrict(?District $district): self
     {
         $this->district = $district;
+
+        return $this;
+    }
+
+    public function getIsBranded(): ?bool
+    {
+        return $this->isBranded;
+    }
+
+    public function setIsBranded(bool $isBranded): self
+    {
+        $this->isBranded = $isBranded;
 
         return $this;
     }

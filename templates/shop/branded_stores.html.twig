@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Branded stores{% endblock %}
+
+{% block main %}
+    {% for shop in shops %}
+        <a href="{{ path('show_store', { id:shop.id}) }}"> {{ shop.name }}</a><br>
+    {% endfor%}
+{% endblock main %}

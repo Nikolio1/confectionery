@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Branded stores{% endblock %}
+
+{% block main %}
+   <h1>{{ shop.name }}</h1>  <br>
+    <p>{{ shop.address }}</p>
+
+    <a href="{{ path('show_district', { id: shop.district.id}) }}">{{ shop.district.name }}</a>
+{% endblock main %}

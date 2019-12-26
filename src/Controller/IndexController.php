@@ -3,20 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\News;
-use App\Handlers\NewsHandler;
+use App\Handlers\BaseHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
-    public $newsHandler;
+    public $handler;
     /**
      * NewsController constructor.
-     * @param NewsHandler $newsHandler
+     * @param BaseHandler $handler
      */
-    public function __construct(NewsHandler $newsHandler)
+    public function __construct(BaseHandler $handler)
     {
-        $this->newsHandler = $newsHandler;
+        $this->handler = $handler;
     }
 
     /**
@@ -24,9 +24,14 @@ class IndexController extends AbstractController
      */
     public function index()
     {
-        $allNews = $this->newsHandler
+        $allNews = $this->handler
             ->getRepository(News::class)
-            ->findAll();
+            ->findBy(
+                [],
+                ['id' => 'DESC'],
+                 4
+                          );
+
         return $this->render('index/index.html.twig', [
             'allNews' => $allNews
         ]);

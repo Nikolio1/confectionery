@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block main %}
+    <h1>Review</h1>
+
+    {% for message in app.flashes('successReview') %}
+        {%  if message %}
+            <div class="success">
+                <div class="alert alert-success success-message">
+                    {{ message }}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if reviews %}
+        {% for review in reviews %}
+            <div class="review-wrap">
+                <p>{{ review.name }}</p>
+                <p>{{ review.text }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No reviews</p>
+    {% endif %}
+    <div class="form-wrap">
+        <p>Leave a review</p>
+        {{ include('review/_formReview.html.twig', {'button_label': 'Send'}) }}
+    </div>
+
+
+
+{% endblock main%}

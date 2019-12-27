@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ award.name }}{% endblock %}
+
+{% block main %}
+
+        <img class="news-image" src="{{ asset('images/award/' ~ award.imageName) }}" alt="">
+        <h2>{{ award.name }}</h2> <br>
+        <p>{{ award.annotation }}</p> <br>
+        <p>{{ award.text}}</p>
+
+
+{% endblock %}

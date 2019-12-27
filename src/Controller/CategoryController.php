@@ -52,10 +52,9 @@ class CategoryController extends AbstractController
     }
 
     /**
- * @Route("/categories", name="categories")
- *
- * @return Response
- */
+     * @Route("/categories", name="categories")
+     * @return Response
+     */
     public function categories()
     {
         $categories= $this->categoryHandler
@@ -68,7 +67,6 @@ class CategoryController extends AbstractController
             'categories' => $categories,
         ]);
     }
-
 
 
     /**

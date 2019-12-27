@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class DistrictController
+ * @package App\Controller
+ */
 class DistrictController extends AbstractController
 {
     /**

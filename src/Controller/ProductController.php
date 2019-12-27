@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class ProductController
+ * @package App\Controller
+ */
 class ProductController extends AbstractController
 {
     /**
@@ -26,6 +30,7 @@ class ProductController extends AbstractController
     {
         $this->productHandler = $productHandler;
     }
+
     /**
      * @Route("/product/{id}", name="show_product")
      *

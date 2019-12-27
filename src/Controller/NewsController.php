@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\News;
 use App\Form\Type\NewsType;
 use App\Handlers\BaseHandler;
-use App\Handlers\NewsHandler;
+use App\Handlers\UploadHandler;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,34 +13,49 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class NewsController
+ * @package App\Controller
+ */
 class NewsController extends AbstractController
 {
+    /**
+     * @var BaseHandler
+     */
     public $handler;
 
-    public $newsHandler;
+    /**
+     * @var UploadHandler
+     */
+    public $uploadHandler;
 
     /**
      * NewsController constructor.
      * @param BaseHandler $handler
-     * @param NewsHandler $newsHandler
+     * @param UploadHandler $uploadHandler
      */
-    public function __construct(BaseHandler $handler , NewsHandler $newsHandler)
+    public function __construct(BaseHandler $handler , UploadHandler $uploadHandler)
     {
         $this->handler = $handler;
-        $this->newsHandler = $newsHandler;
+        $this->uploadHandler = $uploadHandler;
     }
 
     /**
      * @Route("/all-news", name="all_news")
+     *
      * @param PaginatorInterface $paginator
      * @param Request $request
+     *
      * @return Response
      */
     public function listAction(PaginatorInterface $paginator, Request $request)
     {
         $query =  $this->handler
             ->getRepository(News::class)
-            ->findAllNews();
+            ->findBy(
+                [],
+                ['id' => 'DESC']
+            );
 
         $pagination = $paginator->paginate(
             $query,
@@ -54,7 +69,9 @@ class NewsController extends AbstractController
 
     /**
      * @Route("/news/{id}", name="show_news")
+     *
      * @param News $news
+     *
      * @return Response
      */
     public function show(News $news)
@@ -74,7 +91,8 @@ class NewsController extends AbstractController
     public function delete(News $post)
     {
         if (!$post) {
-            return $this->redirectToRoute('categories');
+
+            return $this->redirectToRoute('all_news');
         }
         $this->handler->removeObject($post);
         return $this->redirectToRoute('all_news');
@@ -98,7 +116,7 @@ class NewsController extends AbstractController
 
             $imageFile = $form['imageName']->getData();
             if ($imageFile) {
-                $imageFileName = $this->newsHandler->upload($imageFile , '/news');
+                $imageFileName = $this->uploadHandler->upload($imageFile , '/news');
                 $news->setImageName($imageFileName);
             }
 
@@ -121,7 +139,6 @@ class NewsController extends AbstractController
      */
     public function edit(News $news, Request $request)
     {
-
         $news = $this->handler
             ->getRepository(News::class)
             ->find($news);
@@ -129,6 +146,12 @@ class NewsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $imageFile = $form['imageName']->getData();
+            if ($imageFile) {
+                $imageFileName = $this->uploadHandler->upload($imageFile , '/news');
+                $news->setImageName($imageFileName);
+            }
 
             $this->handler->saveObject($news);
             $this->addFlash('success', 'Success)))!');

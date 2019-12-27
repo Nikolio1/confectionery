@@ -13,8 +13,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class VacancyController
+ * @package App\Controller
+ */
 class VacancyController extends AbstractController
 {
+    /**
+     * @var VacancyHandler
+     */
     public $vacancyHandler;
 
     /**
@@ -30,7 +37,8 @@ class VacancyController extends AbstractController
      * @Route("/vacancies", name="vacancies")
      *
      * @param Request $request
-     * @return Response
+     *
+     * @return RedirectResponse|Response
      */
     public function vacancies(Request $request)
     {
@@ -60,7 +68,9 @@ class VacancyController extends AbstractController
 
     /**
      * @Route("/vacancy/{id}", name="show_vacancy")
+     *
      * @param Vacancy $vacancy
+     *
      * @return Response
      */
     public function show(Vacancy $vacancy)
@@ -111,12 +121,12 @@ class VacancyController extends AbstractController
     /**
      * @Route("/edit-vacancy/{id}", name="edit_vacancy")
      *
-     * @param vacancy $vacancy
+     * @param Vacancy $vacancy
      * @param Request $request
      *
      * @return RedirectResponse|Response
      */
-    public function edit(vacancy $vacancy, Request $request)
+    public function edit(Vacancy $vacancy, Request $request)
     {
         $vacancy = $this->vacancyHandler
             ->getRepository(vacancy::class)

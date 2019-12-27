@@ -25,11 +25,10 @@
     {% else %}
         <p>No reviews</p>
     {% endif %}
+
     <div class="form-wrap">
         <p>Leave a review</p>
         {{ include('review/_formReview.html.twig', {'button_label': 'Send'}) }}
     </div>
-
-
 
 {% endblock main%}

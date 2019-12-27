@@ -10,15 +10,13 @@
                  <td>
                  <a href="{{ path('show_news', { id: news.id }) }}">
                      <img class="news-image" src="{{ asset('images/news/' ~ news.imageName) }}" alt="">
-                     {{ news.dateCreation|date("m/d/Y") }}
+                     {{ news.dateCreation|date("d-m-Y") }}
                      {{ news.heading }}
                      {{ news.annotation }}
                  </a>
-                     <a href="{{ path('delete_news', { id: news.id}) }}">del</a>
                  </td>
              </tr>
          {% endfor %}
-         <a href="{{ path('create_news') }}">create</a>
      </table>
 
      <div class="navigation">

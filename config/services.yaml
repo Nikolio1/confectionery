@@ -29,6 +29,6 @@ services:
     # please note that last definitions always *replace* previous ones
 
 
-    App\Handlers\NewsHandler:
+    App\Handlers\UploadHandler:
         arguments:
             $targetDirectory: '%kernel.project_dir%/public/images'

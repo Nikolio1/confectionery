@@ -25,6 +25,7 @@ class CategoryController extends AbstractController
 
     /**
      * CategoryController constructor.
+     *
      * @param CategoryHandler $categoryHandler
      */
     public function __construct(CategoryHandler $categoryHandler)
@@ -39,12 +40,12 @@ class CategoryController extends AbstractController
      */
     public function customCakes()
     {
-        $categories= $this->categoryHandler
+        $categories= $this
+            ->categoryHandler
             ->getRepository(Category::class)
             ->findBy(
                 ['isElite' => true]
             );
-
 
         return $this->render('custom_cakes/subCategories.html.twig', [
             'categories' => $categories,
@@ -53,11 +54,13 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/categories", name="categories")
+     *
      * @return Response
      */
     public function categories()
     {
-        $categories= $this->categoryHandler
+        $categories= $this
+            ->categoryHandler
             ->getRepository(Category::class)
             ->findBy(
                 ['isElite' => false]
@@ -86,16 +89,18 @@ class CategoryController extends AbstractController
     /**
      * @Route("/delete-category/{id}", name="delete_category")
      *
-     * @param Category $post
+     * @param Category $category
      *
      * @return RedirectResponse
      */
-    public function delete(Category $post)
+    public function delete(Category $category)
     {
-        if (!$post) {
+        if (!$category) {
             return $this->redirectToRoute('categories');
         }
-        $this->categoryHandler->removeObject($post);
+
+        $this->categoryHandler->removeObject($category);
+
         return $this->redirectToRoute('categories');
     }
 
@@ -109,13 +114,17 @@ class CategoryController extends AbstractController
     public function new(Request $request)
     {
         $category= new Category();
+
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryHandler->saveObject($category);
             $this->addFlash('success', 'new item created success!!!');
+
             return $this->redirectToRoute('categories');
         }
+
         return $this->render('category/newCategory.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -131,16 +140,21 @@ class CategoryController extends AbstractController
      */
     public function edit(Category $category, Request $request)
     {
-        $category = $this->categoryHandler
+        $category = $this
+            ->categoryHandler
             ->getRepository(Category::class)
             ->find($category);
+
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryHandler->saveObject($category);
             $this->addFlash('success', 'Success)))!');
+
             return $this->redirectToRoute('categories');
         }
+
         return $this->render('category/edit.html.twig', [
             'form' => $form->createView(),
         ]);

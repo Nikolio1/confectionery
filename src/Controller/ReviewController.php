@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ReviewController
+ *
  * @package App\Controller
  */
 class ReviewController extends AbstractController
@@ -23,6 +24,7 @@ class ReviewController extends AbstractController
 
     /**
      * ReviewController constructor.
+     *
      * @param BaseHandler $handler
      */
     public function __construct(BaseHandler $handler)
@@ -39,28 +41,29 @@ class ReviewController extends AbstractController
      */
     public function reviews(Request $request)
     {
-        $reviews = $this->handler
+        $reviews = $this
+            ->handler
             ->getRepository(Review::class)
             ->findBy(
                 ['isValidated' => true]
             );
 
-        $response = new Review();
-        $form = $this->createForm(ReviewType::class, $response);
+        $review = new Review();
 
+        $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->handler->saveObject($response);
+            $this->handler->saveObject($review);
             $this->addFlash('successReview', 'Review successfully sent for moderation');
 
             return $this->redirectToRoute('reviews');
         }
 
         return $this->render('review/reviews.html.twig', [
-            'title' => 'Reviews',
+            'title'   => 'Reviews',
             'reviews' => $reviews,
-            'form' => $form->createView()
+            'form'    => $form->createView()
         ]);
     }
 }

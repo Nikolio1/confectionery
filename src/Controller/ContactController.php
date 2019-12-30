@@ -12,20 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ContactController
+ *
  * @package App\Controller
  */
 class ContactController extends AbstractController
 {
-    /**
-     * @Route("/contact", name="contact")
-     */
-    public function index()
-    {
-        return $this->render('contact/index.html.twig', [
-            'controller_name' => 'ContactController',
-        ]);
-    }
-
     /**
      * @var BaseHandler
      */
@@ -33,6 +24,7 @@ class ContactController extends AbstractController
 
     /**
      * ReviewController constructor.
+     *
      * @param BaseHandler $handler
      */
     public function __construct(BaseHandler $handler)
@@ -51,8 +43,8 @@ class ContactController extends AbstractController
     {
 
         $response = new Contact();
-        $form = $this->createForm(ContactType::class, $response);
 
+        $form = $this->createForm(ContactType::class, $response);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -64,7 +56,7 @@ class ContactController extends AbstractController
 
         return $this->render('contact/contact.html.twig', [
             'title' => 'Contacts',
-            'form' => $form->createView()
+            'form'  => $form->createView()
         ]);
     }
 }

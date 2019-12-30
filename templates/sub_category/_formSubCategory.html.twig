@@ -1,0 +1,22 @@
+{{ form_start(form) }}
+    <div class="form-control">
+        {{ form_label(form.name,'Name') }}
+        <div class="form-error">
+            {{ form_errors(form.name) }}
+        </div>
+        {{ form_widget(form.name) }}
+        <small>{{ form_help(form.name) }}</small>
+
+    </div>
+
+    <div class="form-control">
+        {{ form_label(form.category,'category') }}
+        <div class="form-error">
+            {{ form_errors(form.category) }}
+        </div>
+        {{ form_widget(form.category) }}
+        <small>{{ form_help(form.category) }}</small>
+
+    </div> <br> <br>
+    <button type="submit" >{{ button_label|default('Save') }}</button>
+{{ form_end(form) }

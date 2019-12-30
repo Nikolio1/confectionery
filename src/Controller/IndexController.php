@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class IndexController
+ *
  * @package App\Controller
  */
 class IndexController extends AbstractController
@@ -20,7 +21,8 @@ class IndexController extends AbstractController
     public $handler;
 
     /**
-     * NewsController constructor.
+     * NewsController constructor
+     * .
      * @param BaseHandler $handler
      */
     public function __construct(BaseHandler $handler)
@@ -35,7 +37,8 @@ class IndexController extends AbstractController
      */
     public function index()
     {
-        $allNews = $this->handler
+        $allNews = $this
+            ->handler
             ->getRepository(News::class)
             ->findBy(
                 [],

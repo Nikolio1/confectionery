@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class VacancyController
+ *
  * @package App\Controller
  */
 class VacancyController extends AbstractController
@@ -26,6 +27,7 @@ class VacancyController extends AbstractController
 
     /**
      * VacancyController constructor.
+     *
      * @param VacancyHandler $vacancyHandler
      */
     public function __construct(VacancyHandler $vacancyHandler)
@@ -42,26 +44,26 @@ class VacancyController extends AbstractController
      */
     public function vacancies(Request $request)
     {
-        $vacancies = $this->vacancyHandler
+        $vacancies = $this
+            ->vacancyHandler
             ->getRepository(Vacancy::class)
             ->findAll();
 
-        $response = new ResponseVacancy();
-        $form = $this->createForm(ResponseVacancyType::class, $response);
+        $vacancy = new ResponseVacancy();
 
+        $form = $this->createForm(ResponseVacancyType::class, $vacancy);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->vacancyHandler->saveObject($response);
+            $this->vacancyHandler->saveObject($vacancy);
             $this->addFlash('success', 'new item created successfully!!!');
 
             return $this->redirectToRoute('vacancies');
         }
 
-
         return $this->render('vacancy/index.html.twig', [
             'vacancies' => $vacancies,
-            'form' => $form->createView()
+            'form'      => $form->createView()
         ]);
     }
 
@@ -83,16 +85,18 @@ class VacancyController extends AbstractController
     /**
      * @Route("/delete-vacancy/{id}", name="delete_vacancy")
      *
-     * @param Vacancy $post
+     * @param Vacancy $vacancy
      *
      * @return RedirectResponse
      */
-    public function delete(Vacancy $post)
+    public function delete(Vacancy $vacancy)
     {
-        if (!$post) {
+        if (!$vacancy) {
             return $this->redirectToRoute('vacancies');
         }
-        $this->vacancyHandler->removeObject($post);
+
+        $this->vacancyHandler->removeObject($vacancy);
+
         return $this->redirectToRoute('vacancies');
     }
 
@@ -106,13 +110,17 @@ class VacancyController extends AbstractController
     public function new(Request $request)
     {
         $vacancy = new Vacancy();
+
         $form = $this->createForm(VacancyType::class, $vacancy);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->vacancyHandler->saveObject($vacancy);
             $this->addFlash('success', 'new item created success!!!');
+
             return $this->redirectToRoute('vacancies');
         }
+
         return $this->render('vacancy/createVacancy.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -128,16 +136,21 @@ class VacancyController extends AbstractController
      */
     public function edit(Vacancy $vacancy, Request $request)
     {
-        $vacancy = $this->vacancyHandler
+        $vacancy = $this
+            ->vacancyHandler
             ->getRepository(vacancy::class)
             ->find($vacancy);
+
         $form = $this->createForm(VacancyType::class, $vacancy);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->vacancyHandler->saveObject($vacancy);
             $this->addFlash('success', 'Success)))!');
+
             return $this->redirectToRoute('vacancies');
         }
+
         return $this->render('vacancy/editVacancy.html.twig', [
             'form' => $form->createView(),
         ]);

@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class NewsController
+ *
  * @package App\Controller
  */
 class NewsController extends AbstractController
@@ -31,6 +32,7 @@ class NewsController extends AbstractController
 
     /**
      * NewsController constructor.
+     *
      * @param BaseHandler $handler
      * @param UploadHandler $uploadHandler
      */
@@ -50,7 +52,8 @@ class NewsController extends AbstractController
      */
     public function listAction(PaginatorInterface $paginator, Request $request)
     {
-        $query =  $this->handler
+        $query =  $this
+            ->handler
             ->getRepository(News::class)
             ->findBy(
                 [],
@@ -84,17 +87,17 @@ class NewsController extends AbstractController
     /**
      * @Route("/delete-news/{id}", name="delete_news")
      *
-     * @param News $post
+     * @param News $news
      *
      * @return RedirectResponse
      */
-    public function delete(News $post)
+    public function delete(News $news)
     {
-        if (!$post) {
+        if (!$news) {
 
             return $this->redirectToRoute('all_news');
         }
-        $this->handler->removeObject($post);
+        $this->handler->removeObject($news);
         return $this->redirectToRoute('all_news');
     }
 
@@ -108,13 +111,13 @@ class NewsController extends AbstractController
     public function new(Request $request)
     {
         $news = new News();
+
         $form = $this->createForm(NewsType::class, $news);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
             $imageFile = $form['imageName']->getData();
+
             if ($imageFile) {
                 $imageFileName = $this->uploadHandler->upload($imageFile , '/news');
                 $news->setImageName($imageFileName);
@@ -122,8 +125,10 @@ class NewsController extends AbstractController
 
             $this->handler->saveObject($news);
             $this->addFlash('success', 'new item created success!!!');
+
             return $this->redirectToRoute('all_news');
         }
+
         return $this->render('news/newNews.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -139,15 +144,17 @@ class NewsController extends AbstractController
      */
     public function edit(News $news, Request $request)
     {
-        $news = $this->handler
+        $news = $this
+            ->handler
             ->getRepository(News::class)
             ->find($news);
+
         $form = $this->createForm(NewsType::class, $news);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $imageFile = $form['imageName']->getData();
+
             if ($imageFile) {
                 $imageFileName = $this->uploadHandler->upload($imageFile , '/news');
                 $news->setImageName($imageFileName);
@@ -155,8 +162,10 @@ class NewsController extends AbstractController
 
             $this->handler->saveObject($news);
             $this->addFlash('success', 'Success)))!');
+
             return $this->redirectToRoute('all_news');
         }
+
         return $this->render('news/editNews.html.twig', [
             'form' => $form->createView(),
         ]);

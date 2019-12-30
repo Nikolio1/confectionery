@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class DistrictController
+ *
  * @package App\Controller
  */
 class DistrictController extends AbstractController
@@ -39,12 +40,13 @@ class DistrictController extends AbstractController
      */
     public function districts()
     {
-        $districts= $this->handler
+        $districts= $this
+            ->handler
             ->getRepository(District::class)
             ->findAll();
 
         return $this->render('district/districts.html.twig', [
-            'title' => 'Districts',
+            'title'     => 'Districts',
             'districts' => $districts,
         ]);
     }
@@ -63,20 +65,21 @@ class DistrictController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/delete-district/{id}", name="delete_district")
      *
-     * @param District $post
+     * @param District $district
      *
      * @return RedirectResponse
      */
-    public function delete(District $post)
+    public function delete(District $district)
     {
-        if (!$post) {
+        if (!$district) {
             return $this->redirectToRoute('districts');
         }
-        $this->handler->removeObject($post);
+
+        $this->handler->removeObject($district);
+
         return $this->redirectToRoute('districts');
     }
 
@@ -90,13 +93,17 @@ class DistrictController extends AbstractController
     public function new(Request $request)
     {
         $district = new District();
+
         $form = $this->createForm(DistrictType::class, $district);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handler->saveObject($district);
             $this->addFlash('success', 'new shop created success!!!');
+
             return $this->redirectToRoute('districts');
         }
+
         return $this->render('district/newDistrict.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -112,16 +119,21 @@ class DistrictController extends AbstractController
      */
     public function edit(District $district, Request $request)
     {
-        $district = $this->handler
+        $district = $this
+            ->handler
             ->getRepository(District::class)
             ->find($district);
+
         $form = $this->createForm(DistrictType::class, $district);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handler->saveObject($district);
             $this->addFlash('success', 'Success)))!');
+
             return $this->redirectToRoute('districts');
         }
+
         return $this->render('district/editDistrict.html.twig', [
             'form' => $form->createView(),
         ]);

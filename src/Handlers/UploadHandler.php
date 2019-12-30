@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Handlers;
-
 
 use App\Entity\Award;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -10,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class NewsHandler
+ *
  * @package App\Handlers
  */
 class UploadHandler
@@ -19,9 +18,9 @@ class UploadHandler
      */
     private $targetDirectory;
 
-
     /**
      * UploadHandler constructor.
+     *
      * @param $targetDirectory
      */
     public function __construct($targetDirectory)
@@ -29,7 +28,12 @@ class UploadHandler
         $this->targetDirectory = $targetDirectory;
     }
 
-
+    /**
+     * @param UploadedFile $file
+     * @param $path
+     *
+     * @return string
+     */
     public function upload(UploadedFile $file, $path)
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -37,10 +41,12 @@ class UploadHandler
         $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
         $file->move($this->getTargetDirectory(). $path, $fileName);
 
-
         return $fileName;
     }
 
+    /**
+     * @return mixed
+     */
     public function getTargetDirectory()
     {
         return $this->targetDirectory;

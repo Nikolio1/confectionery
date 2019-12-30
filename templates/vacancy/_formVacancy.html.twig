@@ -1,0 +1,22 @@
+{{ form_start(form) }}
+    <div class="form-control">
+        {{ form_label(form.name,'name') }}
+        <div class="form-error">
+            {{ form_errors(form.name) }}
+        </div>
+        {{ form_widget(form.name) }}
+        <small>{{ form_help(form.name) }}</small>
+    </div>
+
+    <div class="form-control">
+        {{ form_label(form.description,'description') }}
+        <div class="form-error">
+            {{ form_errors(form.description) }}
+        </div>
+        {{ form_widget(form.description) }}
+        <small>{{ form_help(form.description) }}</small>
+    </div>
+    <br><br>
+    <button type="submit" >{{ button_label|default('Save') }}</button>
+    <button type="reset">Clear</button>
+{{ form_end(form) }

@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ProductController
+ *
  * @package App\Controller
  */
 class ProductController extends AbstractController
@@ -24,6 +25,7 @@ class ProductController extends AbstractController
 
     /**
      * ProductController constructor.
+     *
      * @param ProductHandler $productHandler
      */
     public function __construct(ProductHandler $productHandler)
@@ -48,16 +50,18 @@ class ProductController extends AbstractController
     /**
      * @Route("/delete-product/{id}", name="delete_product")
      *
-     * @param Product $post
+     * @param Product $product
      *
      * @return RedirectResponse
      */
-    public function delete(Product $post)
+    public function delete(Product $product)
     {
-        if (!$post) {
+        if (!$product) {
             return $this->redirectToRoute('categories');
         }
-        $this->productHandler->removeObject($post);
+
+        $this->productHandler->removeObject($product);
+
         return $this->redirectToRoute('categories');
     }
 
@@ -71,13 +75,17 @@ class ProductController extends AbstractController
     public function new(Request $request)
     {
         $product= new Product();
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->productHandler->saveObject($product);
             $this->addFlash('success', 'new item created success!!!');
+
             return $this->redirectToRoute('categories');
         }
+
         return $this->render('product/newProduct.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -93,16 +101,21 @@ class ProductController extends AbstractController
      */
     public function edit(Product $product, Request $request)
     {
-        $product = $this->productHandler
+        $product = $this
+            ->productHandler
             ->getRepository(Product::class)
             ->find($product);
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->productHandler->saveObject($product);
             $this->addFlash('success', 'Success)))!');
+
             return $this->redirectToRoute('categories');
         }
+
         return $this->render('product/editProduct.html.twig', [
             'form' => $form->createView(),
         ]);

@@ -12,14 +12,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class AwardController
+ *
+ * @package App\Controller
+ */
 class AwardController extends AbstractController
 {
+    /**
+     * @var BaseHandler
+     */
     public $handler;
 
+    /**
+     * @var UploadHandler
+     */
     public $uploadHandler;
 
     /**
      * AwardController constructor.
+     *
      * @param BaseHandler $handler
      * @param UploadHandler $uploadHandler
      */
@@ -36,7 +48,8 @@ class AwardController extends AbstractController
      */
     public function listAction( Request $request)
     {
-        $awards = $this->handler
+        $awards = $this
+            ->handler
             ->getRepository(Award::class)
             ->findAll();
 
@@ -50,7 +63,9 @@ class AwardController extends AbstractController
 
     /**
      * @Route("/award/{id}", name="show_award")
+     *
      * @param Award $award
+     *
      * @return Response
      */
     public function show(Award $award)
@@ -63,17 +78,17 @@ class AwardController extends AbstractController
     /**
      * @Route("/delete-award/{id}", name="delete_award")
      *
-     * @param Award $post
+     * @param Award $award
      *
      * @return RedirectResponse
      */
-    public function delete(Award $post)
+    public function delete(Award $award)
     {
-        if (!$post) {
+        if (!$award) {
 
             return $this->redirectToRoute('awards');
         }
-        $this->handler->removeObject($post);
+        $this->handler->removeObject($award);
         return $this->redirectToRoute('awards');
     }
 
@@ -87,13 +102,13 @@ class AwardController extends AbstractController
     public function new(Request $request)
     {
         $award = new Award();
+
         $form = $this->createForm(AwardType::class, $award);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
             $imageFile = $form['imageName']->getData();
+
             if ($imageFile) {
                 $imageFileName = $this->uploadHandler->upload($imageFile , '/award');
                 $award->setImageName($imageFileName);
@@ -101,8 +116,10 @@ class AwardController extends AbstractController
 
             $this->handler->saveObject($award);
             $this->addFlash('success', 'new item created success!!!');
+
             return $this->redirectToRoute('awards');
         }
+
         return $this->render('award/newAward.html.twig', [
             'title' => 'New award',
             'form' => $form->createView(),
@@ -119,29 +136,30 @@ class AwardController extends AbstractController
      */
     public function edit(Award $award, Request $request)
     {
-
-        $award = $this->handler
+        $award = $this
+            ->handler
             ->getRepository(Award::class)
             ->find($award);
+
         $form = $this->createForm(AwardType::class, $award);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $imageFile = $form['imageName']->getData();
             if ($imageFile) {
                 $imageFileName = $this->uploadHandler->upload($imageFile , '/award');
                 $award->setImageName($imageFileName);
             }
 
-
             $this->handler->saveObject($award);
             $this->addFlash('success', 'Success)))!');
+
             return $this->redirectToRoute('awards');
         }
+
         return $this->render('award/editAward.html.twig', [
             'title' => 'Edit award',
-            'form' => $form->createView(),
+            'form'  => $form->createView(),
         ]);
     }
 }

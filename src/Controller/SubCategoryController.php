@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class SubCategoryController
+ *
  * @package App\Controller
  */
 class SubCategoryController extends AbstractController
@@ -25,6 +26,7 @@ class SubCategoryController extends AbstractController
 
     /**
      * CategoryController constructor.
+     *
      * @param SubCategoryHandler $subcategoryHandler
      */
     public function __construct(SubCategoryHandler $subcategoryHandler)
@@ -55,19 +57,22 @@ class SubCategoryController extends AbstractController
             'subCategory' => $subCategory
         ]);
     }
+
     /**
      * @Route("/delete-subCategory/{id}", name="delete_subCategory")
      *
-     * @param SubCategory $post
+     * @param SubCategory $subCategory
      *
      * @return RedirectResponse
      */
-    public function delete(SubCategory $post)
+    public function delete(SubCategory $subCategory)
     {
-        if (!$post) {
+        if (!$subCategory) {
             return $this->redirectToRoute('custom_cakes');
         }
-        $this->subcategoryHandler->removeObject($post);
+
+        $this->subcategoryHandler->removeObject($subCategory);
+
         return $this->redirectToRoute('custom_cakes');
     }
 
@@ -81,13 +86,17 @@ class SubCategoryController extends AbstractController
     public function new(Request $request)
     {
         $category= new SubCategory();
+
         $form = $this->createForm(SubCategoryType::class, $category);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->subcategoryHandler->saveObject($category);
             $this->addFlash('success', 'new item created success!!!');
+
             return $this->redirectToRoute('custom_cakes');
         }
+
         return $this->render('sub_category/newSubCategory.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -103,16 +112,21 @@ class SubCategoryController extends AbstractController
      */
     public function edit(SubCategory $subCategory, Request $request)
     {
-        $subCategory = $this->subcategoryHandler
+        $subCategory = $this
+            ->subcategoryHandler
             ->getRepository(SubCategory::class)
             ->find($subCategory);
+
         $form = $this->createForm(SubCategoryType::class, $subCategory);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->subcategoryHandler->saveObject($subCategory);
             $this->addFlash('success', 'Success)))!');
+
             return $this->redirectToRoute('custom_cakes');
         }
+
         return $this->render('sub_category/editSubCategory.html.twig', [
             'form' => $form->createView(),
         ]);

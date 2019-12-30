@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ShopController
+ *
  * @package App\Controller
  */
 class ShopController extends AbstractController
@@ -22,10 +23,10 @@ class ShopController extends AbstractController
      */
     public $handler;
 
-    /**
-    public $handler;
+
     /**
      * NewsController constructor.
+     *
      * @param BaseHandler $handler
 
      */
@@ -41,7 +42,8 @@ class ShopController extends AbstractController
      */
     public function branded_stores()
     {
-        $shops= $this->handler
+        $shops= $this
+            ->handler
             ->getRepository(Shop::class)
             ->findBy(
                 ['isBranded' => true]
@@ -69,16 +71,18 @@ class ShopController extends AbstractController
     /**
      * @Route("/delete-shop/{id}", name="delete_shop")
      *
-     * @param Shop $post
+     * @param Shop $shop
      *
      * @return RedirectResponse
      */
-    public function delete(Shop $post)
+    public function delete(Shop $shop)
     {
-        if (!$post) {
+        if (!$shop) {
             return $this->redirectToRoute('branded_stores');
         }
-        $this->handler->removeObject($post);
+
+        $this->handler->removeObject($shop);
+
         return $this->redirectToRoute('branded_stores');
     }
 
@@ -92,13 +96,17 @@ class ShopController extends AbstractController
     public function new(Request $request)
     {
         $shop = new Shop();
+
         $form = $this->createForm(ShopType::class, $shop);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handler->saveObject($shop);
             $this->addFlash('success', 'new shop created success!!!');
+
             return $this->redirectToRoute('branded_stores');
         }
+
         return $this->render('shop/newShop.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -114,16 +122,21 @@ class ShopController extends AbstractController
      */
     public function edit(Shop $shop, Request $request)
     {
-        $shop = $this->handler
+        $shop = $this
+            ->handler
             ->getRepository(Shop::class)
             ->find($shop);
+
         $form = $this->createForm(ShopType::class, $shop);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handler->saveObject($shop);
             $this->addFlash('success', 'Success)))!');
+
             return $this->redirectToRoute('branded_stores');
         }
+
         return $this->render('shop/editShop.html.twig', [
             'form' => $form->createView(),
         ]);

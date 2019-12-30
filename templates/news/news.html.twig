@@ -3,11 +3,8 @@
 {% block title %}News{% endblock %}
 
 {% block main %}
-
-        <img class="news-image" src="{{ asset('images/news/' ~ news.imageName) }}" alt="">
-        <h2>{{ news.heading }}</h2> <br>
-        <p>{{ news.annotation }}</p> <br>
-        <p>{{ news.text}}</p>
-
-
+    <img class="news-image" src="{{ asset('images/news/' ~ news.imageName) }}" alt="">
+    <h2>{{ news.heading }}</h2> <br>
+    <p>{{ news.annotation }}</p> <br>
+    <p>{{ news.text}}</p>
 {% endblock %}

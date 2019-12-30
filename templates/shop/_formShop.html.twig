@@ -1,0 +1,52 @@
+{{ form_start(form) }}
+
+    <div class="form-control">
+        {{ form_label(form.name) }}
+        <div class="form-error">
+            {{ form_errors(form.name) }}
+        </div>
+        {{ form_widget(form.name) }}
+        <small>{{ form_help(form.name) }}</small>
+
+    </div>
+
+    <div class="form-control">
+        {{ form_label(form.address,'address') }}
+        <div class="form-error">
+            {{ form_errors(form.address) }}
+        </div>
+        {{ form_widget(form.address) }}
+        <small>{{ form_help(form.address) }}</small>
+    </div>
+
+    <div class="form-control">
+        {{ form_label(form.mapLink,'mapLink') }}
+        <div class="form-error">
+            {{ form_errors(form.mapLink) }}
+        </div>
+        {{ form_widget(form.mapLink) }}
+        <small>{{ form_help(form.mapLink) }}</small>
+    </div>
+
+    <div class="form-control">
+        {{ form_label(form.isBranded,'is Branded') }}
+        <div class="form-error">
+            {{ form_errors(form.isBranded) }}
+        </div>
+        {{ form_widget(form.isBranded) }}
+        <small>{{ form_help(form.isBranded) }}</small>
+    </div>
+
+
+    <div class="form-control">
+        {{ form_label(form.district,'district') }}
+        <div class="form-error">
+            {{ form_errors(form.district) }}
+        </div>
+        {{ form_widget(form.district) }}
+        <small>{{ form_help(form.district) }}</small>
+    </div>
+
+    <br> <br>
+    <button type="submit" >{{ button_label|default('Save') }}</button>
+{{ form_end(form) }

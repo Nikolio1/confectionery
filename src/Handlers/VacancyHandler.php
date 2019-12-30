@@ -1,10 +1,13 @@
 <?php
 
+namespace App\Handlers;
 
-    namespace App\Handlers;
+/**
+ * Class VacancyHandler
+ *
+ * @package App\Handlers
+ */
+class VacancyHandler extends BaseHandler
+{
 
-
-    class VacancyHandler extends BaseHandler
-    {
-
-    }
+}

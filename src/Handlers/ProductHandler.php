@@ -1,16 +1,12 @@
 <?php
 
+namespace App\Handlers;
 
-    namespace App\Handlers;
+/**
+ * Class NewsHandler
+ * @package App\Handlers
+ */
+class ProductHandler extends BaseHandler
+{
 
-
-
-
-    /**
-     * Class NewsHandler
-     * @package App\Handlers
-     */
-    class ProductHandler extends BaseHandler
-    {
-
-    }
+}

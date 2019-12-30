@@ -1,14 +1,12 @@
 <?php
 
+namespace App\Handlers;
 
-    namespace App\Handlers;
+/**
+ * Class SubCategoryHandler
+ * @package App\Handlers
+ */
+class SubCategoryHandler extends BaseHandler
+{
 
-
-    /**
-     * Class CaregoryHandler
-     * @package App\Handlers
-     */
-    class SubCategoryHandler extends BaseHandler
-    {
-
-    }
+}

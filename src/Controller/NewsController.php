@@ -94,7 +94,6 @@ class NewsController extends AbstractController
     public function delete(News $news)
     {
         if (!$news) {
-
             return $this->redirectToRoute('all_news');
         }
         $this->handler->removeObject($news);

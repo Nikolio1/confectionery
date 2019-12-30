@@ -23,7 +23,6 @@ class ShopController extends AbstractController
      */
     public $handler;
 
-
     /**
      * NewsController constructor.
      *

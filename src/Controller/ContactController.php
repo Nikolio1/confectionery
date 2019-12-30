@@ -39,16 +39,15 @@ class ContactController extends AbstractController
      *
      * @return Response
      */
-    public function reviews(Request $request)
+    public function contact(Request $request)
     {
+        $contact = new Contact();
 
-        $response = new Contact();
-
-        $form = $this->createForm(ContactType::class, $response);
+        $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->handler->saveObject($response);
+            $this->handler->saveObject($contact);
             $this->addFlash('successContact', 'Your message has been sent successfully');
 
             return $this->redirectToRoute('contact');

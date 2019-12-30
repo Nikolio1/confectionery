@@ -85,10 +85,11 @@ class AwardController extends AbstractController
     public function delete(Award $award)
     {
         if (!$award) {
-
             return $this->redirectToRoute('awards');
         }
+
         $this->handler->removeObject($award);
+
         return $this->redirectToRoute('awards');
     }
 
@@ -146,6 +147,7 @@ class AwardController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form['imageName']->getData();
+
             if ($imageFile) {
                 $imageFileName = $this->uploadHandler->upload($imageFile , '/award');
                 $award->setImageName($imageFileName);

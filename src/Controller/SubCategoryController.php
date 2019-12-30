@@ -41,7 +41,7 @@ class SubCategoryController extends AbstractController
      */
     public function index()
     {
-        return $this->render('custom_cakes/subCategories.html.twig');
+        return $this->render('sub_category/subCategories.html.twig');
     }
 
     /**
@@ -85,13 +85,13 @@ class SubCategoryController extends AbstractController
      */
     public function new(Request $request)
     {
-        $category= new SubCategory();
+        $subCategory= new SubCategory();
 
-        $form = $this->createForm(SubCategoryType::class, $category);
+        $form = $this->createForm(SubCategoryType::class, $subCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->subcategoryHandler->saveObject($category);
+            $this->subcategoryHandler->saveObject($subCategory);
             $this->addFlash('success', 'new item created success!!!');
 
             return $this->redirectToRoute('custom_cakes');

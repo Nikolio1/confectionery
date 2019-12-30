@@ -2,6 +2,11 @@
 
 {% block title %}Edit Category{% endblock %}
 
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Category{% endblock %}
+
 {% block main %}
     {{ include('category/_formCategory.html.twig', {'button_label': 'Update'}) }}
 {% endblock %}

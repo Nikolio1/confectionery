@@ -33,19 +33,19 @@ class ProductType extends AbstractType
             ->add('imageName', TextType::class, ['empty_data' => null,'required'=> false])
             ->add('isNewProduct', ChoiceType::class, [
                 'choices'  => [
-                    'Yes' => true,
-                    'No' => false,
+                    'Yes'  => true,
+                    'No'   => false,
                 ],
             ])
             ->add('category', EntityType::class,[
-                'class' => Category::class,
-                'placeholder' => 'Choose an option',
+                'class'        => Category::class,
+                'placeholder'  => 'Choose an option',
                 'choice_label' => 'name',
             ])
             ->add('subCategory', EntityType::class,[
-                'class' => SubCategory::class,
-                'placeholder' => 'Choose an option',
-                'required' => false,
+                'class'        => SubCategory::class,
+                'placeholder'  => 'Choose an option',
+                'required'     => false,
                 'choice_label' => 'name',
             ])
         ;

@@ -3,57 +3,5 @@
 {% block title %}Edit News{% endblock %}
 
 {% block main %}
-    {{ form_start(form) }}
-
-        <div class="form-control">
-            {{ form_label(form.dateCreation) }}
-            <div class="form-error">
-                {{ form_errors(form.dateCreation) }}
-            </div>
-            {{ form_widget(form.dateCreation) }}
-            <small>{{ form_help(form.dateCreation) }}</small>
-        </div>
-
-        <div class="form-control">
-            {{ form_label(form.heading,'Heading') }}
-            <div class="form-error">
-                {{ form_errors(form.heading) }}
-            </div>
-            {{ form_widget(form.heading) }}
-            <small>{{ form_help(form.heading) }}</small>
-        </div>
-
-        <div class="form-control">
-            {{ form_label(form.annotation,'annotation') }}
-            <div class="form-error">
-                {{ form_errors(form.annotation) }}
-            </div>
-            {{ form_widget(form.annotation) }}
-            <small>{{ form_help(form.annotation) }}</small>
-        </div>
-
-        <div class="form-control">
-            {{ form_label(form.text,'text') }}
-            <div class="form-error">
-                {{ form_errors(form.text) }}
-            </div>
-            {{ form_widget(form.text) }}
-            <small>{{ form_help(form.text) }}</small>
-        </div>
-
-
-        <div class="form-control">
-            {{ form_label(form.imageName,'Image Name') }}
-            <div class="form-error">
-                {{ form_errors(form.imageName) }}
-            </div>
-            {{ form_widget(form.imageName) }}
-            <small>{{ form_help(form.imageName) }}</small>
-        </div>
-
-        <br> <br>
-
-    <button type="submit" >Save</button>
-    {{ form_end(form) }}
-
+    {{ include('news/_formNews.html.twig', {'button_label': 'Update'}) }}
 {% endblock %}

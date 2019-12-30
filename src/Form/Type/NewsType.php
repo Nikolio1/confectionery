@@ -29,11 +29,12 @@ class NewsType extends AbstractType
             ->add('annotation', TextType::class)
             ->add('text', TextType::class)
             ->add('imageName', FileType::class, [
-                'mapped' => false,
+                'mapped'  => false,
                 'required'=> false
             ])
         ;
     }
+
     /**
      * @param OptionsResolver $resolver
      */

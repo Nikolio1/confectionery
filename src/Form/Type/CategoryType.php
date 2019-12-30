@@ -26,8 +26,8 @@ class CategoryType extends AbstractType
             ->add('name', TextType::class)
             ->add('isElite', ChoiceType::class, [
                 'choices'  => [
-                    'Yes' => true,
-                    'No' => false,
+                    'Yes'  => true,
+                    'No'   => false,
                 ],
             ])
         ;

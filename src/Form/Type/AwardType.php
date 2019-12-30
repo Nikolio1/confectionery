@@ -28,7 +28,7 @@ class AwardType extends AbstractType
             ->add('annotation', TextType::class)
             ->add('text', TextareaType::class)
             ->add('imageName', FileType::class, [
-                'mapped' => false,
+                'mapped'  => false,
                 'required'=> false
             ])
         ;

@@ -30,12 +30,12 @@ class ShopType extends AbstractType
             ->add('mapLink', TextType::class)
             ->add('isBranded', ChoiceType::class, [
                     'choices'  => [
-                        'Yes' => true,
-                        'No' => false,
+                        'Yes'  => true,
+                        'No'   => false,
                     ],
                 ])
             ->add('district', EntityType::class,[
-                'class' => District::class,
+                'class'        => District::class,
                 'choice_label' => 'name',
             ])
         ;

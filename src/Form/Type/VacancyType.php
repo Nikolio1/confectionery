@@ -27,6 +27,7 @@ class VacancyType extends AbstractType
             ->add('description', TextareaType::class)
         ;
     }
+
     /**
      * @param OptionsResolver $resolver
      */

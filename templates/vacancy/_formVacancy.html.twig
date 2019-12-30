@@ -1,5 +1,23 @@
 {{ form_start(form) }}
     <div class="form-control">
+        {{ form_label(form.vacancy,'vacancy') }}
+        <div class="form-error">
+            {{ form_errors(form.vacancy) }}
+        </div>
+        {{ form_widget(form.vacancy) }}
+        <small>{{ form_help(form.vacancy) }}</small>
+    </div>
+
+    <div class="form-control">
+        {{ form_label(form.email,'email') }}
+        <div class="form-error">
+            {{ form_errors(form.email) }}
+        </div>
+        {{ form_widget(form.email) }}
+        <small>{{ form_help(form.email) }}</small>
+    </div>
+
+    <div class="form-control">
         {{ form_label(form.name,'name') }}
         <div class="form-error">
             {{ form_errors(form.name) }}
@@ -9,14 +27,15 @@
     </div>
 
     <div class="form-control">
-        {{ form_label(form.description,'description') }}
+        {{ form_label(form.messageText,'messageText') }}
         <div class="form-error">
-            {{ form_errors(form.description) }}
+            {{ form_errors(form.messageText) }}
         </div>
-        {{ form_widget(form.description) }}
-        <small>{{ form_help(form.description) }}</small>
+        {{ form_widget(form.messageText) }}
+        <small>{{ form_help(form.messageText) }}</small>
     </div>
+
     <br><br>
     <button type="submit" >{{ button_label|default('Save') }}</button>
     <button type="reset">Clear</button>
-{{ form_end(form) }
+{{ form_end(form) }}

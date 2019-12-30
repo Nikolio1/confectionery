@@ -1,11 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-Главная
 
     <div class="wrap-news">
         {% for news in allNews %}
-
             <div class="index-news">
                 <div class="news-image">
                     <a href="{{ path('show_news', { id: news.id }) }}">
@@ -17,7 +15,8 @@
                     <a href="{{ path('show_news', { id: news.id }) }}">
                         <h2>{{ news.heading }}</h2>
                     </a>  <br>
-                    <p>{{ news.annotation }}</p> <br>show_news
+
+                    <p>{{ news.annotation }}</p> <br>
                 </div>
             </div>
         {% endfor %}

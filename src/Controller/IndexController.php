@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\News;
+<<<<<<< HEAD
 use App\Handlers\BaseHandler;
+=======
+use App\Handlers\NewsHandler;
+>>>>>>> f6281e77c9ff7a08528e146d09e4215107e87d4f
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +18,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class IndexController extends AbstractController
 {
+    public $newsHandler;
+
+    /**
+     * NewsController constructor.
+     * @param NewsHandler $newsHandler
+     */
+    public function __construct(NewsHandler $newsHandler)
+    {
+        $this->newsHandler = $newsHandler;
+    }
+
     /**
      * @var BaseHandler
      */
@@ -35,6 +50,7 @@ class IndexController extends AbstractController
      */
     public function index()
     {
+<<<<<<< HEAD
         $allNews = $this->handler
             ->getRepository(News::class)
             ->findBy(
@@ -46,6 +62,15 @@ class IndexController extends AbstractController
         return $this->render('index/index.html.twig', [
             'allNews' => $allNews
         ]);
+=======
+        $allNews = $this->newsHandler
+            ->getRepository(News::class)
+            ->findAll();
+
+        return $this->render('index/index.html.twig', [
+            'allNews' => $allNews
+            ]);
+>>>>>>> f6281e77c9ff7a08528e146d09e4215107e87d4f
     }
 
     /**

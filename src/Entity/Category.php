@@ -38,20 +38,27 @@ class Category
     private $products;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="subCategories")
+     *
+     * @ORM\JoinColumn(name="parent_сategory", referencedColumnName="id",nullable=true)
+     */
+    private $parentCategory;
+
+    /**
      * @ORM\OneToMany(
-     *     targetEntity="App\Entity\SubCategory",
-     *     mappedBy="category",
+     *     targetEntity="App\Entity\Category",
+     *     mappedBy="parentCategory",
      *     orphanRemoval=true,
-     *     cascade={"persist","remove"}
+     *     cascade={"persist","remove"},
      *)
      */
     private $subCategories;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->products = new ArrayCollection();
         $this->subCategories = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -63,9 +70,9 @@ class Category
         return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->name = $Name;
+        $this->name = $name;
 
         return $this;
     }
@@ -113,34 +120,47 @@ class Category
         return $this;
     }
 
+    public function getParentCategory(): ?self
+    {
+        return $this->parentCategory;
+    }
+
+    public function setParentCategory(?self $parentCategory): self
+    {
+        $this->parentCategory = $parentCategory;
+
+        return $this;
+    }
+
     /**
-     * @return Collection|SubCategory[]
+     * @return Collection|Category[]
      */
     public function getSubCategories(): Collection
     {
         return $this->subCategories;
     }
 
-    public function addSubCategory(SubCategory $subCategory): self
+    public function addSubCategory(Category $subCategory): self
     {
         if (!$this->subCategories->contains($subCategory)) {
             $this->subCategories[] = $subCategory;
-            $subCategory->setCategory($this);
+            $subCategory->setParentCategory($this);
         }
 
         return $this;
     }
 
-    public function removeSubCategory(SubCategory $subCategory): self
+    public function removeSubCategory(Category $subCategory): self
     {
         if ($this->subCategories->contains($subCategory)) {
             $this->subCategories->removeElement($subCategory);
             // set the owning side to null (unless already changed)
-            if ($subCategory->getCategory() === $this) {
-                $subCategory->setCategory(null);
+            if ($subCategory->getParentCategory() === $this) {
+                $subCategory->setParentCategory(null);
             }
         }
 
         return $this;
     }
+
 }

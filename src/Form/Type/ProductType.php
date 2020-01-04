@@ -8,6 +8,7 @@ use App\Entity\SubCategory;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,7 +30,7 @@ class ProductType extends AbstractType
             ->add('name', TextType::class)
             ->add('annotation', TextType::class)
             ->add('description', TextType::class)
-            ->add('weight', TextType::class)
+            ->add('weight', NumberType::class)
             ->add('imageName', TextType::class, ['empty_data' => null,'required'=> false])
             ->add('isNewProduct', ChoiceType::class, [
                 'choices'  => [

@@ -32,7 +32,7 @@ class Category
      * @ORM\OneToMany(
      *     targetEntity="Product",
      *     mappedBy="category",
-     *     cascade={"persist","remove"}
+     *     cascade={"persist"}
      * )
      */
     private $products;
@@ -49,7 +49,7 @@ class Category
      *     targetEntity="App\Entity\Category",
      *     mappedBy="parentCategory",
      *     orphanRemoval=true,
-     *     cascade={"persist","remove"},
+     *     cascade={"persist"}
      *)
      */
     private $subCategories;

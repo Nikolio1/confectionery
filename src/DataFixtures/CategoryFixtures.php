@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -15,14 +16,26 @@ class CategoryFixtures extends BaseFixture
     /**
      * @var array
      */
-    public static $categoryName = [
+    public static $categories = [
         'Festive cakes',
         'Cakes for every day',
         'Weighted cakes and rolls ',
         'Elite cakes',
-        'High Storage Products ',
-        'Cake sets ',
+        'High Storage Products',
+        'Cake sets',
     ];
+
+    /**
+     * @var array
+     */
+    public static $subCategories = [
+        'Birthday',
+        'Wedding',
+        'Children\'s party',
+        'Beloved man',
+        'Company Birthday',
+    ];
+
 
 
     /**
@@ -30,18 +43,41 @@ class CategoryFixtures extends BaseFixture
      */
     public function loadData(ObjectManager $manager)
     {
+        foreach (self::$categories as $valueCategory) {
 
-        $this->createMany(Category::class, 5,function (Category $category, $count) {
+            $category = new Category();
 
-            $category
-                ->setName(
-                    $this->faker->randomElement(self::$categoryName)
-                )
-                ->setIsElite(
-                    $this->faker->boolean(20)
-                );
-        });
+            if ($valueCategory != 'Elite cakes') {
+                $category->setName($valueCategory);
+                $category->setIsElite(false);
+                $manager->persist($category);
 
-        $manager->flush();
+                $this->setReference($valueCategory, $category);
+
+                $manager->flush();
+
+            } else {
+                $category->setName($valueCategory);
+                $category->setIsElite( true);
+                $manager->persist($category);
+
+                $this->setReference('parentCategory', $category);
+                $manager->flush();
+            }
+        }
+
+        foreach (self::$subCategories as $valueSubCategory) {
+            $category = new Category();
+            $category->setName($valueSubCategory);
+            $category->setIsElite(false);
+            $category->setParentCategory($this->getReference('parentCategory'));
+            $manager->persist($category);
+
+            $this->setReference($valueSubCategory, $category);
+            $manager->flush();
+        }
+
+
     }
 }
+

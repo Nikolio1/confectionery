@@ -28,9 +28,9 @@ class NewsFixtures extends BaseFixture
      */
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(News::class, 10,function (News $news, $count) {
+        $this->createMany(News::class, 20,function (News $news, $count) {
 
-        $news->setHeading($this->faker->text(5))
+        $news->setHeading($this->faker->text(15))
              ->setAnnotation($this->faker->text(25))
              ->setDateCreation($this->faker->dateTimeBetween($startDate = '-30 days', $endDate = 'now', $timezone = null))
              ->setImageName($this->faker->randomElement(self::$newsImages))

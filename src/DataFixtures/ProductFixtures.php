@@ -41,16 +41,14 @@ class ProductFixtures extends BaseFixture
         $this->createMany(Product::class, 50,function (Product $product, $count) {
 
             $product->setName($this->faker->text(10))
-                ->setDescription($this->faker->realText($maxNbChars = 2000, $indexSize = 2))
-                ->setAnnotation($this->faker->text(25))
-                ->setIsNewProduct(false)
-                ->setImageName('product1.jpg')
-                ->setWeight($this->faker->numberBetween(1,5))
-                ->setCategory($this->getReference($this->faker->randomElement(self::$categories)));
-
+                    ->setDescription($this->faker->realText($maxNbChars = 2000, $indexSize = 2))
+                    ->setAnnotation($this->faker->text(25))
+                    ->setIsNewProduct(false)
+                    ->setImageName('product1.jpg')
+                    ->setWeight($this->faker->numberBetween(1,5))
+                    ->setCategory($this->getReference($this->faker->randomElement(self::$categories)));
         });
 
         $manager->flush();
-
     }
 }

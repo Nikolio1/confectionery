@@ -29,7 +29,7 @@ class VacancyFixtures extends BaseFixture
             $vacancy = new Vacancy();
 
             $vacancy->setName($value)
-                ->setDescription($this->faker->text(200));
+                    ->setDescription($this->faker->text(200));
 
             $manager->persist($vacancy);
         }

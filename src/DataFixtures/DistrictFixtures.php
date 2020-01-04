@@ -37,14 +37,13 @@ class DistrictFixtures extends BaseFixture
     {
         foreach (self::$districtName as $value) {
             $district = new District();
+
             $district->setName($value);
 
             $manager->persist($district);
+            $manager->flush();
 
             $this->setReference($value, $district);
-
-            $manager->flush();
         }
-
     }
 }

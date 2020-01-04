@@ -19,8 +19,16 @@ abstract class BaseFixture extends Fixture
      */
     protected $faker;
 
+    /**
+     * @param ObjectManager $em
+     *
+     * @return mixed
+     */
     abstract protected function loadData(ObjectManager $em);
 
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
@@ -29,6 +37,11 @@ abstract class BaseFixture extends Fixture
         $this->loadData($manager);
     }
 
+    /**
+     * @param string $className
+     * @param int $count
+     * @param callable $factory
+     */
     protected function createMany(string $className, int $count, callable  $factory)
     {
         for ($i = 0; $i < $count; $i++) {

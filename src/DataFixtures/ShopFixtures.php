@@ -56,13 +56,12 @@ class ShopFixtures extends BaseFixture
         $this->createMany(Shop::class, 30,function (Shop $shop, $count) {
 
             $shop->setName('shop№'.(rand(1,100)))
-                ->setAddress($this->faker->address)
-                ->setMapLink($this->faker->text(30))
-                ->setIsBranded($this->faker->boolean(30))
-                ->setDistrict($this->getReference($this->faker->randomElement(self::$districtName)));
+                 ->setAddress($this->faker->address)
+                 ->setMapLink($this->faker->text(30))
+                 ->setIsBranded($this->faker->boolean(30))
+                 ->setDistrict($this->getReference($this->faker->randomElement(self::$districtName)));
         });
 
         $manager->flush();
-
     }
 }

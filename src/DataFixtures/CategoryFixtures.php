@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -37,7 +36,6 @@ class CategoryFixtures extends BaseFixture
     ];
 
 
-
     /**
      * @param ObjectManager $manager
      */
@@ -48,33 +46,39 @@ class CategoryFixtures extends BaseFixture
             $category = new Category();
 
             if ($valueCategory != 'Elite cakes') {
-                $category->setName($valueCategory);
-                $category->setIsElite(false);
+                $category->setName($valueCategory)
+                         ->setIsElite(false);
+
                 $manager->persist($category);
+                $manager->flush();
 
                 $this->setReference($valueCategory, $category);
 
-                $manager->flush();
+
 
             } else {
-                $category->setName($valueCategory);
-                $category->setIsElite( true);
+                $category->setName($valueCategory)
+                         ->setIsElite( true);
+
                 $manager->persist($category);
+                $manager->flush();
 
                 $this->setReference('parentCategory', $category);
-                $manager->flush();
+
             }
         }
 
         foreach (self::$subCategories as $valueSubCategory) {
             $category = new Category();
-            $category->setName($valueSubCategory);
-            $category->setIsElite(false);
-            $category->setParentCategory($this->getReference('parentCategory'));
+
+            $category->setName($valueSubCategory)
+                     ->setIsElite(false)
+                     ->setParentCategory($this->getReference('parentCategory'));
+
             $manager->persist($category);
+            $manager->flush();
 
             $this->setReference($valueSubCategory, $category);
-            $manager->flush();
         }
 
 

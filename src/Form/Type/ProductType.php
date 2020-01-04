@@ -43,12 +43,6 @@ class ProductType extends AbstractType
                 'placeholder'  => 'Choose an option',
                 'choice_label' => 'name',
             ])
-            ->add('subCategory', EntityType::class,[
-                'class'        => SubCategory::class,
-                'placeholder'  => 'Choose an option',
-                'required'     => false,
-                'choice_label' => 'name',
-            ])
         ;
     }
     /**

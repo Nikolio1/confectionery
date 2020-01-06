@@ -1,0 +1,12 @@
+.form-signin {
+    max-width: 280px;
+    margin: 150px auto 0;
+}
+
+.btn-login {
+    width: 100%;
+}
+
+.form-control {
+    margin-bottom: 20px;
+}

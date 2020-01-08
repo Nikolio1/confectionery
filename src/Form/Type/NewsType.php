@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Entity\News;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -31,6 +32,9 @@ class NewsType extends AbstractType
             ->add('imageName', FileType::class, [
                 'mapped'  => false,
                 'required'=> false
+            ])
+            ->add('updated', DateTimeType::class,[
+                'mapped' => false,
             ])
         ;
     }

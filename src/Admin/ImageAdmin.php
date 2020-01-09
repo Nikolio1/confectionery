@@ -9,7 +9,6 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-
 /**
  * Class ImageAdmin
  *
@@ -28,33 +27,32 @@ final class ImageAdmin extends AbstractAdmin
         ;
     }
 
-    public function prePersist($image)
+    /**
+     * @param object $file
+     */
+    public function prePersist($file)
     {
-        $this->manageFileUpload($image);
-    }
-
-    public function preUpdate($image)
-    {
-        $this->manageFileUpload($image);
-    }
-
-    private function manageFileUpload($image)
-    {
-        if ($image->getFile()) {
-            $image->refreshUpdated();
+        if ( $file->getFile()) {
+            $file->refreshUpdated();
+            $file->lifecycleFileUpload();
+;
         }
+
     }
+
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('filename');
+            ->add('filename')
+            ->add('updated');
 
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('filename');
+            ->addIdentifier('filename')
+            ->addIdentifier('updated');
     }
 }

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Image
 {
-    const SERVER_PATH_TO_IMAGE_FOLDER = 'images/news';
+    const SERVER_PATH_TO_IMAGE_FOLDER = 'images';
 
     /**
      * @ORM\Id()

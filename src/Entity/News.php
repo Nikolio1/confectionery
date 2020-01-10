@@ -42,9 +42,27 @@ class News
      */
     private $imageName;
 
+    /**
+     *
+     */
+    private $file;
+
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDateCreation(): ?\DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
     }
 
     public function getHeading(): ?string
@@ -76,21 +94,9 @@ class News
         return $this->text;
     }
 
-    public function setText(?string $text): self
+    public function setText(string $text): self
     {
         $this->text = $text;
-
-        return $this;
-    }
-
-    public function getDateCreation(): ?\DateTimeInterface
-    {
-        return $this->dateCreation;
-    }
-
-    public function setDateCreation(\DateTimeInterface $dateCreation): self
-    {
-        $this->dateCreation = $dateCreation;
 
         return $this;
     }
@@ -106,4 +112,21 @@ class News
 
         return $this;
     }
+
+    /**
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
 }

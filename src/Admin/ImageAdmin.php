@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Handlers\UploadHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -18,6 +19,16 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
  */
 final class ImageAdmin extends AbstractAdmin
 {
+    protected $uploadHandler;
+
+
+    public function __construct($code, $class, $baseControllerName, UploadHandler $uploadHandler)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->uploadHandler = $uploadHandler;
+    }
+
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -28,18 +39,26 @@ final class ImageAdmin extends AbstractAdmin
     }
 
     /**
+     * @param object $object
+     */
+    public function prePersist($object)
+    {
+        if ( $object->getFile() instanceof UploadHandler) {
+            $imageFileName = $this->uploadHandler->upload($object->getFile() , '/news');
+            $object->setImageName($imageFileName);
+        }
+    }
+
+    /**
      * @param object $file
      */
-    public function prePersist($file)
+    public function preUpdate($file)
     {
         if ( $file->getFile()) {
             $file->refreshUpdated();
             $file->lifecycleFileUpload();
-;
         }
-
     }
-
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {

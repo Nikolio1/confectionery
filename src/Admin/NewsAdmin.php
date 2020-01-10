@@ -2,15 +2,18 @@
 
 namespace App\Admin;
 
+use App\Handlers\UploadHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class NewsAdmin
@@ -21,6 +24,27 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  */
 final class NewsAdmin extends AbstractAdmin
 {
+    protected $uploadHandler;
+
+
+    public function __construct($code, $class, $baseControllerName, UploadHandler $uploadHandler)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->uploadHandler = $uploadHandler;
+    }
+
+    public function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('dateCreation', null, [
+                'format' => 'd-m-Y H:i',
+            ])
+            ->add('heading', TextType::class)
+            ->add('annotation', TextType::class)
+            ->add('text', TextareaType::class)
+            ->add('imageName', TextType::class);
+    }
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -28,11 +52,9 @@ final class NewsAdmin extends AbstractAdmin
             ->add('heading', TextType::class)
             ->add('annotation', TextType::class)
             ->add('text', TextareaType::class)
-            ->add('imageName', FileType::class,[
-                'mapped'  => false,
-                'required' => false,
-            ])
-        ;
+            ->add('file', FileType::class, [
+                'required' => false
+            ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -45,12 +67,49 @@ final class NewsAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('dateCreation')
-            ->addIdentifier('heading')
-            ->addIdentifier('annotation')
-            ->addIdentifier('text')
-            ->addIdentifier('imageName');
+            ->add('id')
+            ->add('dateCreation')
+            ->add('heading')
+            ->add('annotation')
+            ->add('text', null, [
+                'editable' => true
+            ])
+            ->add('imageName')
+            ->add('_action', null, [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                    'delete' => []
+                ]
+            ]);
     }
 
+
+    /**
+     * @param object $object
+     */
+    public function prePersist($object)
+    {
+        if ( $object->getFile() instanceof UploadedFile) {
+            $imageFileName = $this->uploadHandler->upload($object->getFile() , '/news');
+            $object->setImageName($imageFileName);
+        }
+    }
+
+    /**
+     * @param object $object
+     */
+    public function preUpdate($object)
+    {
+        if ($object->isSubmitted() && $object->isValid() ) {
+            $imageFile = $object->getImageName();
+
+            if ($imageFile) {
+                $imageFileName = $this->uploadHandler->upload($imageFile , '/news');
+                $object->setImageName($imageFileName);
+            }
+
+        }
+    }
 
 }

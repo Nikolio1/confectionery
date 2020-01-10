@@ -5,7 +5,7 @@ namespace App\Handlers;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Class NewsHandler
+ * Class UploadHandler
  *
  * @package App\Handlers
  */
@@ -25,6 +25,11 @@ class UploadHandler
     {
         $this->targetDirectory = $targetDirectory;
     }
+
+//    public function removeFile($object, $path)
+//    {
+//
+//    }
 
     /**
      * @param UploadedFile $file

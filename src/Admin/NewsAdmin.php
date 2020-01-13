@@ -24,15 +24,28 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 final class NewsAdmin extends AbstractAdmin
 {
+    /**
+     * @var UploadHandler
+     */
     protected $uploadHandler;
 
-
+    /**
+     * NewsAdmin constructor.
+     *
+     * @param $code
+     * @param $class
+     * @param $baseControllerName
+     * @param UploadHandler $uploadHandler
+     */
     public function __construct($code, $class, $baseControllerName, UploadHandler $uploadHandler)
     {
         parent::__construct($code, $class, $baseControllerName);
         $this->uploadHandler = $uploadHandler;
     }
 
+    /**
+     * @param ShowMapper $showMapper
+     */
     public function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
@@ -45,6 +58,9 @@ final class NewsAdmin extends AbstractAdmin
             ->add('imageName', TextType::class);
     }
 
+    /**
+     * @param FormMapper $formMapper
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -54,9 +70,13 @@ final class NewsAdmin extends AbstractAdmin
             ->add('text', TextareaType::class)
             ->add('file', FileType::class, [
                 'required' => false
-            ]);
+            ])
+        ;
     }
 
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -64,6 +84,9 @@ final class NewsAdmin extends AbstractAdmin
             ->add('heading');
     }
 
+    /**
+     * @param ListMapper $listMapper
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
@@ -81,9 +104,9 @@ final class NewsAdmin extends AbstractAdmin
                     'edit' => [],
                     'delete' => []
                 ]
-            ]);
+            ])
+        ;
     }
-
 
     /**
      * @param object $object
@@ -101,15 +124,20 @@ final class NewsAdmin extends AbstractAdmin
      */
     public function preUpdate($object)
     {
-        if ($object->isSubmitted() && $object->isValid() ) {
-            $imageFile = $object->getImageName();
-
-            if ($imageFile) {
-                $imageFileName = $this->uploadHandler->upload($imageFile , '/news');
-                $object->setImageName($imageFileName);
-            }
-
+        if ($object->getFile() instanceof UploadedFile) {
+            $fileName = $object->getImageName();
+            $this->uploadHandler->removeFile($fileName, '/news');
+            $imageFileName = $this->uploadHandler->upload($object->getFile() , '/news');
+            $object->setImageName($imageFileName);
         }
     }
 
+    /**
+     * @param object $object
+     */
+    public function postRemove($object)
+    {
+        $fileName = $object->getImageName();
+        $this->uploadHandler->removeFile($fileName, '/news');
+    }
 }

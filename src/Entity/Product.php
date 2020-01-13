@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -59,6 +60,8 @@ class Product
      * )
      */
     private $category;
+
+    private $file;
 
     public function getId(): ?int
     {
@@ -155,5 +158,21 @@ class Product
         $this->category = $category;
 
         return $this;
+    }
+
+    /**
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
 }

@@ -26,10 +26,18 @@ class UploadHandler
         $this->targetDirectory = $targetDirectory;
     }
 
-//    public function removeFile($object, $path)
-//    {
-//
-//    }
+    /**
+     * @param $fileName
+     * @param $path
+     */
+    public function removeFile($fileName, $path)
+    {
+        $pathFile = $this->getTargetDirectory() . $path . '/' . $fileName;
+
+        if (file_exists($pathFile)) {
+            unlink($pathFile);
+        }
+    }
 
     /**
      * @param UploadedFile $file
@@ -41,11 +49,11 @@ class UploadHandler
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
-        $safeFilename =md5($originalFilename);
+        $safeFilename = md5($originalFilename);
 
-        $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+        $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
-        $file->move($this->getTargetDirectory(). $path, $fileName);
+        $file->move($this->getTargetDirectory() . $path, $fileName);
 
         return $fileName;
     }

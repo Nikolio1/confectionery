@@ -3,17 +3,20 @@
 namespace App\Admin;
 
 use App\Entity\Category;
+use App\Handlers\UploadHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
@@ -25,6 +28,43 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  */
 final class ProductAdmin extends AbstractAdmin
 {
+    /**
+     * @var UploadHandler
+     */
+    protected $uploadHandler;
+
+    /**
+     * NewsAdmin constructor.
+     *
+     * @param $code
+     * @param $class
+     * @param $baseControllerName
+     * @param UploadHandler $uploadHandler
+     */
+    public function __construct($code, $class, $baseControllerName, UploadHandler $uploadHandler)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->uploadHandler = $uploadHandler;
+    }
+
+    /**
+     * @param ShowMapper $showMapper
+     */
+    public function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('name')
+            ->add('annotation')
+            ->add('description')
+            ->add('weight')
+            ->add('imageName')
+            ->add('isNewProduct')
+            ->add('category.name');
+    }
+
+    /**
+     * @param FormMapper $formMapper
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -32,9 +72,8 @@ final class ProductAdmin extends AbstractAdmin
             ->add('annotation', TextType::class)
             ->add('description', TextareaType::class)
             ->add('weight', NumberType::class)
-            ->add('imageName', TextType::class, [
-                'empty_data' => null,
-                'required'=> false
+            ->add('file', FileType::class, [
+                'required' => false
             ])
             ->add('isNewProduct', ChoiceType::class, [
                 'choices'  => [
@@ -51,6 +90,9 @@ final class ProductAdmin extends AbstractAdmin
         ;
     }
 
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -60,15 +102,60 @@ final class ProductAdmin extends AbstractAdmin
             ->add('category.name');
     }
 
+    /**
+     * @param ListMapper $listMapper
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
-            ->addIdentifier('annotation')
-            ->addIdentifier('description')
-            ->addIdentifier('weight')
-            ->addIdentifier('imageName')
-            ->addIdentifier('isNewProduct')
-            ->addIdentifier('category.name');
+            ->add('id')
+            ->add('name')
+            ->add('annotation')
+            ->add('description')
+            ->add('weight')
+            ->add('imageName')
+            ->add('isNewProduct')
+            ->add('category.name')
+            ->add('_action', null, [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                    'delete' => []
+                ]
+            ])
+        ;
+    }
+
+    /**
+     * @param object $object
+     */
+    public function prePersist($object)
+    {
+        if ( $object->getFile() instanceof UploadedFile) {
+            $imageFileName = $this->uploadHandler->upload($object->getFile() , '/product');
+            $object->setImageName($imageFileName);
+        }
+    }
+
+    /**
+     * @param object $object
+     */
+    public function preUpdate($object)
+    {
+        if ($object->getFile() instanceof UploadedFile) {
+            $fileName = $object->getImageName();
+            $this->uploadHandler->removeFile($fileName, '/news');
+            $imageFileName = $this->uploadHandler->upload($object->getFile() , '/product');
+            $object->setImageName($imageFileName);
+        }
+    }
+
+    /**
+     * @param object $object
+     */
+    public function postRemove($object)
+    {
+            $fileName = $object->getImageName();
+            $this->uploadHandler->removeFile($fileName, '/product');
     }
 }

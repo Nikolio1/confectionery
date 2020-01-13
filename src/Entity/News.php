@@ -128,5 +128,4 @@ class News
     {
         return $this->file;
     }
-
 }

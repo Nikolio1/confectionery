@@ -115,12 +115,8 @@ class NewsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form['imageName']->getData();
-
-            if ($imageFile) {
-                $imageFileName = $this->uploadHandler->upload($imageFile , '/news');
-                $news->setImageName($imageFileName);
-            }
+            $imageFileName = $this->uploadHandler->upload($news->getFile() , '/news');
+            $news->setImageName($imageFileName);
 
             $this->handler->saveObject($news);
             $this->addFlash('success', 'new item created success!!!');

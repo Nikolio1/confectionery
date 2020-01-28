@@ -38,18 +38,9 @@ img {
     max-width: 170px;
     height: 140px;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> f6281e77c9ff7a08528e146d09e4215107e87d4f
 .news-margin {
     margin-right: 100px;
-}
-
-<<<<<<< HEAD
-.news-annotation {
-    display: flex;
-    align-items: center;
 }
 
 .success {
@@ -80,9 +71,7 @@ img {
     padding: 10px 30px;
     max-width: 300px;
 
-=======
 .news-annotation{
     display: flex;
     align-items: center;
->>>>>>> f6281e77c9ff7a08528e146d09e4215107e87d4f
 }

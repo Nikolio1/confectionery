@@ -3,7 +3,6 @@
 {% block title %}{{ category.name }}{% endblock %}
 
 {% block main %}
-
     Category: {{ category.name }} <br><br>
     {% if not category.isElite %}
         {% for  product in category.products %}
@@ -26,6 +25,4 @@
             <br>
         {% endfor %}
     {% endif %}
-
-
 {% endblock %}

@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ subCategory.name }}{% endblock %}
+{% block title %}{{ category.name }}{% endblock %}
 
 {% block main %}
-    Category: {{ subCategory.name }} <br><br>
+    Category: {{ category.name }} <br><br>
 
-    {% for  product in subCategory.products %}
+    {% for  product in category.products %}
         <a href="{{ path('show_product', { id: product.id }) }}">{{product.name}}</a>
         <br>
     {% endfor %}

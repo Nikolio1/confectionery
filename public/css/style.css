@@ -43,11 +43,6 @@ img {
     margin-right: 100px;
 }
 
-.news-annotation {
-    display: flex;
-    align-items: center;
-}
-
 .success {
     width: 100%;
     padding: 20px 0;
@@ -75,4 +70,8 @@ img {
     border-radius: 10px;
     padding: 10px 30px;
     max-width: 300px;
+
+.news-annotation{
+    display: flex;
+    align-items: center;
 }

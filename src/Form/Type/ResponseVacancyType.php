@@ -7,6 +7,7 @@ use App\Entity\Vacancy;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,11 +28,13 @@ class ResponseVacancyType extends AbstractType
         $builder
             ->add('vacancy', EntityType::class,[
                 'class' => Vacancy::class,
+                'placeholder' => 'select job',
+                'required' => true,
                 'choice_label' => 'name',
             ])
             ->add('email', EmailType::class)
             ->add('name', TextType::class)
-            ->add('messageText', TextType::class)
+            ->add('messageText', TextareaType::class)
         ;
     }
 

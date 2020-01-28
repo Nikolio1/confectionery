@@ -60,20 +60,6 @@ class Product
      */
     private $category;
 
-    /**
-     * @ORM\ManyToOne(
-     *     targetEntity="SubCategory",
-     *     inversedBy="products"
-     * )
-     * @ORM\JoinColumn(
-     *     name="subCategory_id",
-     *     referencedColumnName="id",
-     *     onDelete="CASCADE",
-     *     nullable=true
-     * )
-     */
-    private $subCategory;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -167,18 +153,6 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    public function getSubCategory(): ?SubCategory
-    {
-        return $this->subCategory;
-    }
-
-    public function setSubCategory(?SubCategory $subCategory): self
-    {
-        $this->subCategory = $subCategory;
 
         return $this;
     }

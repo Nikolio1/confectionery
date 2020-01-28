@@ -62,8 +62,10 @@ class CategoryController extends AbstractController
         $categories= $this
             ->categoryHandler
             ->getRepository(Category::class)
-            ->findBy(
-                ['isElite' => false]
+            ->findBy([
+                    'isElite' => false,
+                    'parentCategory' => null
+                ]
             );
 
         return $this->render('category/index.html.twig', [
@@ -157,6 +159,20 @@ class CategoryController extends AbstractController
 
         return $this->render('category/edit.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/sub-category/{id}", name="show_subCategory")
+     *
+     * @param Category $category
+     *
+     * @return Response
+     */
+    public function showS(Category $category)
+    {
+        return $this->render('category/productsInSubCategory.html.twig', [
+            'category' => $category
         ]);
     }
 }

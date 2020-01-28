@@ -6,7 +6,17 @@
     Category: {{ category.name }} <br><br>
     {% if not category.isElite %}
         {% for  product in category.products %}
-            <a href="{{ path('show_product', { id: product.id }) }}">{{product.name}}</a>
+            <div class="wrap-product">
+                <a class="product-name" href="{{ path('show_product', { id: product.id }) }}">{{product.name}}</a>
+                <div>
+                    <a href="{{ path('show_product', { id: product.id }) }}">
+                        <img class="product-img"  src="{{ asset('images/product/' ~ product.imageName) }}" alt="image">
+                    </a>
+                </div>
+
+
+            </div>
+
             <br>
         {% endfor %}
     {% else %}

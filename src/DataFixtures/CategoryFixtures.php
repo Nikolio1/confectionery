@@ -45,27 +45,19 @@ class CategoryFixtures extends BaseFixture
 
             $category = new Category();
 
-            if ($valueCategory != 'Elite cakes') {
-                $category->setName($valueCategory)
-                         ->setIsElite(false);
+            $category->setName($valueCategory);
 
-                $manager->persist($category);
-                $manager->flush();
+            if ($valueCategory != 'Elite cakes') {
+                $category->setIsElite(false);
 
                 $this->setReference($valueCategory, $category);
-
-
-
             } else {
-                $category->setName($valueCategory)
-                         ->setIsElite( true);
-
-                $manager->persist($category);
-                $manager->flush();
+                $category->setIsElite( true);
 
                 $this->setReference('parentCategory', $category);
-
             }
+
+            $manager->persist($category);
         }
 
         foreach (self::$subCategories as $valueSubCategory) {
@@ -76,12 +68,11 @@ class CategoryFixtures extends BaseFixture
                      ->setParentCategory($this->getReference('parentCategory'));
 
             $manager->persist($category);
-            $manager->flush();
 
             $this->setReference($valueSubCategory, $category);
         }
 
-
+        $manager->flush();
     }
 }
 

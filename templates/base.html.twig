@@ -41,7 +41,27 @@
                         <li class="menu-item">
                             <a class="menu-link" href="{{ path('contact') }}">Contacts</a>
                         </li>
-                    </ul
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="menu-item dropdown">
+                                <a href="#" class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">admin</a>
+                               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                   <a class="dropdown-item" href="{{ asset('http://127.0.0.1:8001/admin/dashboard') }}">Admin panel</a>
+                                   <a class="dropdown-item" href="{{ asset('logout') }}">Logout</a>
+                               </div>
+                            </li>
+                        {% elseif is_granted('ROLE_USER') %}
+                            <li class="menu-item dropdown">
+                                <a href="#" class="dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{{ asset('logout') }}">Logout</a>
+                                </div>
+                            </li>
+                        {%  else %}
+                        <li class="menu-item">
+                            <a class="menu-link" href="{{ path('app_login') }}">Login</a>
+                        </li>
+                        {% endif %}
+                    </ul>
                 </nav>
             </div>
         </header>

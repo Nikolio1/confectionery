@@ -2,12 +2,10 @@
 
 namespace App\Handlers;
 
-use App\Entity\Award;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Class NewsHandler
+ * Class UploadHandler
  *
  * @package App\Handlers
  */
@@ -29,6 +27,19 @@ class UploadHandler
     }
 
     /**
+     * @param $fileName
+     * @param $path
+     */
+    public function removeFile($fileName, $path)
+    {
+        $pathFile = $this->getTargetDirectory() . $path . '/' . $fileName;
+
+        if (file_exists($pathFile)) {
+            unlink($pathFile);
+        }
+    }
+
+    /**
      * @param UploadedFile $file
      * @param $path
      *
@@ -37,9 +48,12 @@ class UploadHandler
     public function upload(UploadedFile $file, $path)
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename =md5($originalFilename);
-        $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-        $file->move($this->getTargetDirectory(). $path, $fileName);
+
+        $safeFilename = md5($originalFilename);
+
+        $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
+
+        $file->move($this->getTargetDirectory() . $path, $fileName);
 
         return $fileName;
     }

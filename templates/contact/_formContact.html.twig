@@ -1,36 +1,37 @@
 {{ form_start(form) }}
 
-    <div class="form-control">
+    <div >
         {{ form_label(form.name,'Name') }}
+        {{ form_widget(form.name, { 'attr': {'class': 'form-control'}} ) }}
         <div class="form-error">
             {{ form_errors(form.name) }}
         </div>
-        {{ form_widget(form.name) }}
+
         <small>{{ form_help(form.name) }}</small>
     </div>
 
-    <div class="form-control">
+    <div >
         {{ form_label(form.email,'Email') }}
         <div class="form-error">
             {{ form_errors(form.email) }}
         </div>
-        {{ form_widget(form.email) }}
+        {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
         <small>{{ form_help(form.email) }}</small>
     </div>
 
-    <div class="form-control">
+    <div>
         {{ form_label(form.text,'Text') }}
         <div class="form-error">
             {{ form_errors(form.text) }}
         </div>
-        {{ form_widget(form.text) }}
+        {{ form_widget(form.text, { 'attr': {'class': 'form-control'} }) }}
         <small>{{ form_help(form.text) }}</small>
     </div>
 
     <br> <br>
 
-    <button type="submit" >{{ button_label|default('Send') }}</button>
-    <button type="reset" >Clear</button>
+    <button class="btn btn-dark " type="submit" >{{ button_label|default('Send') }}</button>
+    <button class="btn btn-danger" type="reset" >Clear</button>
 
 {{ form_end(form) }}
 

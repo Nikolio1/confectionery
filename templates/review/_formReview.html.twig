@@ -1,6 +1,6 @@
 {{ form_start(form) }}
 
-    <div class="form-control">
+    <div >
         {{ form_label(form.name,'Name') }}
         <div class="form-error">
             {{ form_errors(form.name) }}
@@ -9,7 +9,7 @@
         <small>{{ form_help(form.name) }}</small>
     </div>
 
-    <div class="form-control">
+    <div >
         {{ form_label(form.email,'Email') }}
         <div class="form-error">
             {{ form_errors(form.email) }}
@@ -18,7 +18,7 @@
         <small>{{ form_help(form.email) }}</small>
     </div>
 
-    <div class="form-control">
+    <div>
         {{ form_label(form.text,'Text') }}
         <div class="form-error">
             {{ form_errors(form.text) }}

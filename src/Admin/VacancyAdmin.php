@@ -2,11 +2,11 @@
 
 namespace App\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 
@@ -14,11 +14,22 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  * Class VacancyAdmin
  *
  * @package App\Admin
- *
- * @IsGranted("ROLE_ADMIN")
  */
 final class VacancyAdmin extends AbstractAdmin
 {
+    /**
+     * @param ShowMapper $showMapper
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('name')
+            ->add('description');
+    }
+
+    /**
+     * @param FormMapper $formMapper
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -27,6 +38,9 @@ final class VacancyAdmin extends AbstractAdmin
 
     }
 
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -34,10 +48,20 @@ final class VacancyAdmin extends AbstractAdmin
             ->add('description');
     }
 
+    /**
+     * @param ListMapper $listMapper
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
-            ->addIdentifier('description');
+            ->add('name')
+            ->add('description')
+            ->add('_action', null, [
+                'actions' => [
+                    'show'   => [],
+                    'edit'   => [],
+                    'delete' => []
+                ]
+            ]);
     }
 }

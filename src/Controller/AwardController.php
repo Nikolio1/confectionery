@@ -60,7 +60,6 @@ class AwardController extends AbstractController
         );
     }
 
-
     /**
      * @Route("/award/{id}", name="show_award")
      *

@@ -3,12 +3,12 @@
 namespace App\Admin;
 
 use App\Entity\District;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -17,10 +17,25 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  *
  * @package App\Admin
  *
- * @IsGranted("ROLE_ADMIN")
  */
 final class ShopAdmin extends AbstractAdmin
 {
+    /**
+     * @param ShowMapper $showMapper
+     */
+    public function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('name')
+            ->add('address')
+            ->add('mapLink')
+            ->add('isBranded')
+            ->add('district.name');
+    }
+
+    /**
+     * @param FormMapper $formMapper
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -40,6 +55,9 @@ final class ShopAdmin extends AbstractAdmin
         ;
     }
 
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -50,13 +68,23 @@ final class ShopAdmin extends AbstractAdmin
             ->add('district.name');
     }
 
+    /**
+     * @param ListMapper $listMapper
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
-            ->addIdentifier('address')
-            ->addIdentifier('mapLink')
-            ->addIdentifier('isBranded')
-            ->addIdentifier('district.name');
+            ->add('name')
+            ->add('address')
+            ->add('mapLink')
+            ->add('isBranded')
+            ->add('district.name')
+            ->add('_action', null, [
+                'actions' => [
+                    'show'   => [],
+                    'edit'   => [],
+                    'delete' => []
+                ]
+            ]);
     }
 }

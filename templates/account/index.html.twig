@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage Account!{% endblock %}
+
+{% block main %}
+    <h1>Manage Your Account {{ app.user.firstName }}</h1>
+
+    <img src="{{ asset('images/user/' ~ user.photoName) }}" alt="">
+    <label for="firstName">First name</label>
+    <div id="firstName">{{ app.user.firstName }}</div> <br>
+    <label for="firstName">Email</label>
+    <div id="firstName">{{ app.user.email }}</div> <br>
+
+{% endblock %}

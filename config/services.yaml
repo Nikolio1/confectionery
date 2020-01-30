@@ -28,7 +28,48 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-
     App\Handlers\UploadHandler:
         arguments:
             $targetDirectory: '%kernel.project_dir%/public/images'
+
+    admin.category:
+        class: App\Admin\CategoryAdmin
+        arguments: [~, App\Entity\Category, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, label: Category}
+
+    admin.news:
+        class: App\Admin\NewsAdmin
+        arguments: [~, App\Entity\News, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, label: News}
+
+    admin.award:
+        class: App\Admin\AwardAdmin
+        arguments: [~, App\Entity\Award, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, label: Award}
+
+    admin.disrict:
+        class: App\Admin\DistrictAdmin
+        arguments: [~, App\Entity\District, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, label: District}
+
+    admin.shop:
+        class: App\Admin\ShopAdmin
+        arguments: [~, App\Entity\Shop, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, label: Shop}
+
+    admin.product:
+        class: App\Admin\ProductAdmin
+        arguments: [~, App\Entity\Product, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, label: Product}
+
+    admin.user:
+        class: App\Admin\UserAdmin
+        arguments: [~, App\Entity\User, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, label: User}

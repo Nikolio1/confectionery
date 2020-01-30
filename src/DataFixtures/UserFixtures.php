@@ -25,8 +25,6 @@ class UserFixtures extends BaseFixture
      */
     protected function loadData(ObjectManager $manager)
     {
-
-
             $user = new User();
             $user->setEmail('user1@mail.ru')
                   ->setFirstName($this->faker->firstName)

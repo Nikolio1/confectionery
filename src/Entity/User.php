@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -37,6 +38,26 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $photoName;
+
+    /**
+     *
+     */
+    private $file;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Countries", inversedBy="users")
+     */
+    private $country;
 
     public function getId(): ?int
     {
@@ -125,6 +146,58 @@ class User implements UserInterface
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getPhotoName(): ?string
+    {
+        return $this->photoName;
+    }
+
+    public function setPhotoName(string $photoName): self
+    {
+        $this->photoName = $photoName;
+
+        return $this;
+    }
+
+    /**
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function getCountry(): ?Countries
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Countries $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }

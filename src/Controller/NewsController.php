@@ -69,7 +69,6 @@ class NewsController extends AbstractController
         return $this->render('news/allNews.html.twig', ['pagination' => $pagination]);
     }
 
-
     /**
      * @Route("/news/{id}", name="show_news")
      *

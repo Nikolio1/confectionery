@@ -3,26 +3,36 @@
 namespace App\Admin;
 
 use App\Entity\Category;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
 
 /**
  * Class CategoryAdmin
  *
  * @package App\Admin
- *
- * @IsGranted("ROLE_ADMIN")
  */
 final class CategoryAdmin extends AbstractAdmin
 {
+    /**
+     * @param ShowMapper $showMapper
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('name')
+            ->add('isElite')
+            ->add('parentCategory.name');
+    }
+
+    /**
+     * @param FormMapper $formMapper
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -42,6 +52,9 @@ final class CategoryAdmin extends AbstractAdmin
         ;
     }
 
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -50,11 +63,21 @@ final class CategoryAdmin extends AbstractAdmin
             ->add('parentCategory.name');
     }
 
+    /**
+     * @param ListMapper $listMapper
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
-            ->addIdentifier('isElite')
-            ->addIdentifier('parentCategory.name');
+            ->add('name')
+            ->add('isElite')
+            ->add('parentCategory.name')
+            ->add('_action', null, [
+                'actions' => [
+                    'show'   => [],
+                    'edit'   => [],
+                    'delete' => []
+                ]
+            ]);
     }
 }

@@ -15,18 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class IndexController extends AbstractController
 {
-    public $newsHandler;
-
-    /**
-     * NewsController constructor.
-     *
-     * @param NewsHandler $newsHandler
-     */
-    public function __construct(NewsHandler $newsHandler)
-    {
-        $this->newsHandler = $newsHandler;
-    }
-
     /**
      * @var BaseHandler
      */

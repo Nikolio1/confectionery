@@ -4,7 +4,6 @@ namespace App\Admin;
 
 use App\Entity\Category;
 use App\Handlers\UploadHandler;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -23,8 +22,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * Class ProductAdmin
  *
  * @package App\Admin
- *
- * @IsGranted("ROLE_ADMIN")
  */
 final class ProductAdmin extends AbstractAdmin
 {

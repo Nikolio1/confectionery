@@ -3,7 +3,6 @@
 namespace App\Admin;
 
 use App\Handlers\UploadHandler;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -19,8 +18,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * Class NewsAdmin
  *
  * @package App\Admin
- *
- * @IsGranted("ROLE_ADMIN")
  */
 final class NewsAdmin extends AbstractAdmin
 {

@@ -73,7 +73,6 @@ class CategoryController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/category/{id}", name="show_category")
      *
@@ -169,7 +168,7 @@ class CategoryController extends AbstractController
      *
      * @return Response
      */
-    public function showS(Category $category)
+    public function shows(Category $category)
     {
         return $this->render('category/productsInSubCategory.html.twig', [
             'category' => $category

@@ -7,7 +7,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * Class User
+ *
+ *  @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
+ * @package App\Entity
  */
 class User implements UserInterface, \Serializable
 {

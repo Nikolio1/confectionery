@@ -32,10 +32,12 @@ class UploadHandler
      */
     public function removeFile($fileName, $path)
     {
-        $pathFile = $this->getTargetDirectory() . $path . '/' . $fileName;
+        if ($fileName !== "" && $fileName !== null) {
+            $pathFile = $this->getTargetDirectory() . $path . '/' . $fileName;
 
-        if (file_exists($pathFile)) {
-            unlink($pathFile);
+            if (file_exists($pathFile) ) {
+                unlink($pathFile);
+            }
         }
     }
 

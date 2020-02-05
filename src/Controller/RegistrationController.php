@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\Type\UserType;;
+use App\Form\Type\User\UserType;
 use App\Entity\User;
 use App\Handlers\BaseHandler;
 use App\Handlers\UploadHandler;
@@ -26,26 +26,31 @@ class RegistrationController extends AbstractController
     public $uploadHandler;
 
     /**
+     * @var
+     */
+    public $passwordEncoder;
+
+    /**
      * NewsController constructor.
      *
      * @param BaseHandler $handler
      * @param UploadHandler $uploadHandler
+     * @param UserPasswordEncoderInterface $passwordEncoder
      */
-    public function __construct(BaseHandler $handler , UploadHandler $uploadHandler)
+    public function __construct(BaseHandler $handler , UploadHandler $uploadHandler, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->handler = $handler;
         $this->uploadHandler = $uploadHandler;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
      *  @Route("/register", name="user_registration")
      *
      * @param Request $request
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     *
      * @return RedirectResponse|Response
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function registerAction(Request $request )
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -53,23 +58,19 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $password = $passwordEncoder->encodePassword($user, $form->get('plainPassword')->getData());
+            $password = $this->passwordEncoder->encodePassword($user, $form->get('plainPassword')->getData());
             $user->setPassword($password);
 
             $imageFileName = $this->uploadHandler->upload($user->getFile() , '/user');
             $user->setPhotoName($imageFileName);
 
             $this->handler->saveObject($user);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
 
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render(
-            'registration/register.html.twig',
-            array('form' => $form->createView())
-        );
+        return $this->render('registration/register.html.twig',[
+            'form' => $form->createView()
+        ]);
     }
 }

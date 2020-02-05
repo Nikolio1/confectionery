@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+    <div>
+        {{ form_label(form.email) }}
+        <div>
+            {{ form_errors(form.email) }}
+        </div>
+        {{ form_widget(form.email) }}
+        <small>{{ form_help(form.email) }}</small>
+    </div>
+    <br> <br>
+    <button type="submit" >Reset password</button>
+{{ form_end(form) }}
+

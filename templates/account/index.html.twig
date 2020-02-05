@@ -2,13 +2,30 @@
 
 {% block title %}Manage Account!{% endblock %}
 
+{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}">{% endblock %}
+
 {% block main %}
     <h1>Manage Your Account {{ app.user.firstName }}</h1>
-
-    <img src="{{ asset('images/user/' ~ user.photoName) }}" alt="">
-    <label for="firstName">First name</label>
-    <div id="firstName">{{ app.user.firstName }}</div> <br>
-    <label for="firstName">Email</label>
-    <div id="firstName">{{ app.user.email }}</div> <br>
-
+    <div class="wrap_userData">
+        <div class="wrap_user">
+            <label for="firstName">First name</label>
+            <div id="firstName">{{ app.user.firstName }}</div> <br>
+            <label for="firstName">Email</label>
+            <div id="firstName">{{ app.user.email }}</div> <br>
+            <label for="country">Country</label>
+            <div id="country">{{ app.user.country.name }}</div> <br>
+            <a class="btn btn-primary" href="{{ path('edit_profile') }}">
+                Edit profile
+            </a>
+            <a class="btn btn-primary" data-fancybox data-src="#modal-form" href="javascript:;">
+                Edit password
+            </a>
+        </div>
+        <img class="account_img" src="{{ asset('images/user/' ~ user.photoName) }}" alt="">
+    </div>
+    <form method="post"  class="form" id="modal-form" style="display:none;">
+        {{ include('account/_formEditPassword.html.twig') }}
+    </form>
 {% endblock %}
+
+{% block js %} <script src="{{ asset('js/jquery.fancybox.min.js') }}" ></script>{% endblock %}

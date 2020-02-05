@@ -1,0 +1,45 @@
+{{ form_start(form) }}
+    <div>
+        {{ form_label(form.email) }}
+        <div>
+            {{ form_errors(form.email) }}
+        </div>
+        {{ form_widget(form.email) }}
+        <small>{{ form_help(form.email) }}</small>
+    </div>
+    <div>
+        {{ form_label(form.firstName) }}
+        <div>
+            {{ form_errors(form.firstName) }}
+        </div>
+        {{ form_widget(form.firstName) }}
+        <small>{{ form_help(form.firstName) }}</small>
+    </div>
+    <div>
+        {{ form_label(form.lastName) }}
+        <div>
+            {{ form_errors(form.lastName) }}
+        </div>
+        {{ form_widget(form.lastName) }}
+        <small>{{ form_help(form.lastName) }}</small>
+    </div>
+    <div>
+        {{ form_label(form.country) }}
+        <div>
+            {{ form_errors(form.country) }}
+        </div>
+        {{ form_widget(form.country) }}
+        <small>{{ form_help(form.country) }}</small>
+    </div>
+    <div>
+        {{ form_label(form.file) }}
+        <div>
+            {{ form_errors(form.file) }}
+        </div>
+        {{ form_widget(form.file) }}
+        <small>{{ form_help(form.file) }}</small>
+    </div>
+    <br> <br>
+    <button type="submit" >Save</button>
+{{ form_end(form) }}
+

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;clearstatcache();
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -69,16 +69,27 @@ class User implements UserInterface, \Serializable
      */
     private $resetTokenExpiresAt;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     *
+     * @return $this
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -87,9 +98,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * A visual identifier that represents this user.
-     *
      * @see UserInterface
+     *
+     * @return string
      */
     public function getUsername(): string
     {
@@ -98,16 +109,22 @@ class User implements UserInterface, \Serializable
 
     /**
      * @see UserInterface
+     *
+     * @return array
      */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     *
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -117,12 +134,19 @@ class User implements UserInterface, \Serializable
 
     /**
      * @see UserInterface
+     *
+     * @return string
      */
     public function getPassword(): string
     {
         return (string) $this->password;
     }
 
+    /**
+     * @param string $password
+     *
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -132,6 +156,8 @@ class User implements UserInterface, \Serializable
 
     /**
      * @see UserInterface
+     *
+     * @return string|void|null
      */
     public function getSalt()
     {
@@ -148,11 +174,19 @@ class User implements UserInterface, \Serializable
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
+    /**
+     * @param string $firstName
+     *
+     * @return $this
+     */
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
@@ -160,11 +194,19 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    /**
+     * @return string|null\
+     */
     public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
+    /**
+     * @param string $lastName
+     *
+     * @return $this
+     */
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
@@ -172,11 +214,19 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPhotoName(): ?string
     {
         return $this->photoName;
     }
 
+    /**
+     * @param string $photoName
+     *
+     * @return $this
+     */
     public function setPhotoName(string $photoName): self
     {
         $this->photoName = $photoName;
@@ -200,11 +250,19 @@ class User implements UserInterface, \Serializable
         return $this->file;
     }
 
+    /**
+     * @return Countries|null
+     */
     public function getCountry(): ?Countries
     {
         return $this->country;
     }
 
+    /**
+     * @param Countries|null $country
+     *
+     * @return $this
+     */
     public function setCountry(?Countries $country): self
     {
         $this->country = $country;
@@ -212,6 +270,9 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function serialize()
     {
         return serialize(array(
@@ -225,6 +286,9 @@ class User implements UserInterface, \Serializable
         ));
     }
 
+    /**
+     * @param string $serialized
+     */
     public function unserialize($serialized)
     {
         list (
@@ -238,11 +302,19 @@ class User implements UserInterface, \Serializable
             ) = unserialize($serialized);
     }
 
+    /**
+     * @return string|null
+     */
     public function getResetToken(): ?string
     {
         return $this->resetToken;
     }
 
+    /**
+     * @param string|null $resetToken
+     *
+     * @return $this
+     */
     public function setResetToken(?string $resetToken): self
     {
         $this->resetToken = $resetToken;
@@ -250,11 +322,19 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getResetTokenExpiresAt(): ?\DateTimeInterface
     {
         return $this->resetTokenExpiresAt;
     }
 
+    /**
+     * @param \DateTimeInterface|null $resetTokenExpiresAt
+     *
+     * @return $this
+     */
     public function setResetTokenExpiresAt(?\DateTimeInterface $resetTokenExpiresAt): self
     {
         $this->resetTokenExpiresAt = $resetTokenExpiresAt;

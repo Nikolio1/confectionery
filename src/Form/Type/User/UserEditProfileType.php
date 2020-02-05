@@ -27,6 +27,7 @@ class UserEditProfileType extends AbstractType
 
     /**
      * UserEditProfileType constructor.
+     *
      * @param UploadHandler $uploadHandler
      */
     public function __construct(UploadHandler $uploadHandler)
@@ -34,6 +35,10 @@ class UserEditProfileType extends AbstractType
         $this->uploadHandler = $uploadHandler;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -51,6 +56,9 @@ class UserEditProfileType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\Countries;
 use App\Handlers\UploadHandler;
+use Faker\Provider\Text;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -11,6 +12,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -79,6 +82,17 @@ final class UserAdmin extends AbstractAdmin
                 'first_options'  => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
             ])
+            ->add('roles', TextType::class, [
+                'required' => false,
+            ])
+            ->get('roles')->addModelTransformer(new CallbackTransformer(
+                function ($tagsAsArray) {
+                    return json_encode($tagsAsArray);
+                },
+                function ($tagsAsString) {
+                    return json_decode($tagsAsString);
+                }
+            ))
         ;
     }
 
@@ -161,6 +175,6 @@ final class UserAdmin extends AbstractAdmin
     public function postRemove($object)
     {
         $fileName = $object->getPhotoName();
-        $this->uploadHandler->removeFile($fileName, '/news');
+        $this->uploadHandler->removeFile($fileName, '/user');
     }
 }
